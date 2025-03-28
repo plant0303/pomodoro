@@ -1,3 +1,27 @@
-.timerCont{
-    
-}
+@import "../../global.scss";
+
+
+  .timer-circle {
+    fill: none;
+    stroke: none;
+  }
+
+  .timerPath {
+    fill: none;
+    stroke: #d66258;
+    stroke-width: 6px;
+    stroke-linecap: round;
+    transition: 1s linear all;
+    transform: rotate(270deg); /* 시작점 조정 */
+    transform-origin: center;
+  }
+
+    .timerCircleBase {
+    fill: transparent;
+    stroke: #efefef;
+    stroke-width: 5px;
+  }
+
+  .timerSvg {
+    transform: scaleX(1);
+  }

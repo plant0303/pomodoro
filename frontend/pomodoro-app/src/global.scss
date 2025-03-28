@@ -1,0 +1,35 @@
+// src/styles/global.scss
+
+// 색상 변수 정의
+$primary-color: #007bff;
+$secondary-color: #6c757d;
+$danger-color: #dc3545;
+$light-background-color: #ffffff;
+$dark-background-color: #121212;
+$light-text-color: #000000;
+$dark-text-color: #ffffff;
+
+// 기본 화이트 모드 스타일
+body.light {
+  background-color: $light-background-color;
+  color: $light-text-color;
+}
+
+// 기본 다크 모드 스타일
+body.dark {
+  background-color: $dark-background-color;
+  color: $dark-text-color;
+}
+
+// 버튼 스타일
+button {
+  background-color: $primary-color;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  cursor: pointer;
+
+  &:hover {
+    background-color: darken($primary-color, 10%);
+  }
+}
