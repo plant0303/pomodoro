@@ -1,10 +1,18 @@
 import React, { useState, useEffect } from "react";
 import style from "../css/Timer/PomodoroTimer.module.scss";
 const PomodoroTimer = () => {
+  // 타이머 초기 설정
   const initialMinutes = 40;
+  // 남은 시간 저장
   const [timeLeft, setTimeLeft] = useState(initialMinutes * 60);
+  // 타이머 실행 여부 상태
   const [isRunning, setIsRunning] = useState(false);
+  // 드래그 상태 여부
+  const [isDragging, setIsDragging] = useState(false);
+
+  // 반지름
   const radius = 50;
+  // 원의 둘레
   const circumference = 2 * Math.PI * radius;
 
   // 눈금
@@ -19,7 +27,7 @@ const PomodoroTimer = () => {
         x2="60"
         y2="15"
         stroke="#ccc"
-        strokeWidth="0.8"
+        strokeWidth="0.5"
         transform={`rotate(${angle} 60 60)`}
       />
     ) : (
@@ -36,6 +44,10 @@ const PomodoroTimer = () => {
     );
   });
 
+
+  const handleMouseDown = () => {
+    setIsDragging(true);
+  }
   useEffect(() => {
     if (!isRunning) return;
 
@@ -57,7 +69,7 @@ const PomodoroTimer = () => {
   return (
     <>
       <div className={style.timerCont}>
-        <svg viewBox="0 0 120 120">
+        <svg className={`${!isRunning && style.svgStart}`} onMouseDown={handleMouseDown} viewBox="0 0 120 120">
           <defs>
             <linearGradient id="grad" x1="0%" y1="100%" x2="80%" y2="100%">
               <stop offset="0%" stopColor="#ffd455" />
