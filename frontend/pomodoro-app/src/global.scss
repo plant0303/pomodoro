@@ -1,12 +1,12 @@
 // src/styles/global.scss
 
 // 색상 변수 정의
-$primary-color: #007bff;
+$primary-color: #ffd455;
 $secondary-color: #6c757d;
 $danger-color: #dc3545;
 $light-background-color: #ffffff;
 $dark-background-color: #121212;
-$light-text-color: #000000;
+$light-text-color: #333;
 $dark-text-color: #ffffff;
 
 // 기본 화이트 모드 스타일
@@ -23,13 +23,22 @@ body.dark {
 
 // 버튼 스타일
 button {
-  background-color: $primary-color;
-  color: white;
+  width: 80%;
+  border: 1px solid $dark-background-color;
+  border-radius: 50px;
+  color: $light-text-color;
   padding: 10px 20px;
   border: none;
   cursor: pointer;
-
+  transition: 0.1s ease-in-out;
   &:hover {
     background-color: darken($primary-color, 10%);
+  }
+}
+
+@media screen and (max-width: 900px) {
+
+  button{
+    width: 50%;
   }
 }
