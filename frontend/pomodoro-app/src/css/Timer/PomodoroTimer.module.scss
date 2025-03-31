@@ -8,6 +8,19 @@
   left: 50%;
   transform: translate(-50%, -50%);
   
+  .line{
+    width: 10%;
+    height: 1px;
+    top: calc(50% - 1px / 2);
+    background: #da7f11;
+    position: absolute;
+  }
+  #lines1{
+
+  }
+  #lines2{
+  }
+
   .timerBackground{
     fill: none;
     stroke: #ddd;
@@ -18,7 +31,7 @@
     fill: none;
     stroke: url(#grad);
     stroke-width: 10;
-    stroke-linecap: round;
+    // stroke-linecap: round;
     transform: rotate(-90deg);
     transform-origin: 60px 60px;
   }
@@ -36,6 +49,13 @@
 .timerBtn{
   position: absolute;
   bottom: max(5vh, 15%);
+  width: 50%;
+}
+.start{
+  background-color: $primary-color;
+  &:hover{
+    background-color: #ffcd35;
+  }
 }
 
 .timerCont > svg {
@@ -64,5 +84,6 @@
   .timerBtn{
     position: absolute;
     bottom: max(2vh, 2%);
+    width: 50%;
   }
 }

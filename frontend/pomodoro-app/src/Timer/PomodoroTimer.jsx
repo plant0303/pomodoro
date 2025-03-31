@@ -1,10 +1,40 @@
 import React, { useState, useEffect } from "react";
 import style from "../css/Timer/PomodoroTimer.module.scss";
-const PomodoroTimer = ({ initialMinutes = 20 }) => {
+const PomodoroTimer = () => {
+  const initialMinutes = 40;
   const [timeLeft, setTimeLeft] = useState(initialMinutes * 60);
   const [isRunning, setIsRunning] = useState(false);
   const radius = 50;
   const circumference = 2 * Math.PI * radius;
+
+  // 눈금
+  const tickMarks = Array.from({ length: 60 }, (_, i) => {
+    const angle = (i / 60) * 360;
+    // 0, 15, 30, 45에 굵은 마커 생성
+    return i % 15 == 0 ? (
+      <line
+        key={i}
+        x1="60"
+        y1="18"
+        x2="60"
+        y2="15"
+        stroke="#ccc"
+        strokeWidth="0.8"
+        transform={`rotate(${angle} 60 60)`}
+      />
+    ) : (
+      <line
+        key={i}
+        x1="60"
+        y1="17"
+        x2="60"
+        y2="15"
+        stroke="#ccc"
+        strokeWidth="0.2"
+        transform={`rotate(${angle} 60 60)`}
+      />
+    );
+  });
 
   useEffect(() => {
     if (!isRunning) return;
@@ -48,13 +78,18 @@ const PomodoroTimer = ({ initialMinutes = 20 }) => {
             strokeDasharray={circumference}
             strokeDashoffset={strokeDashoffset}
           />
+          {tickMarks}
         </svg>
+
         <div className={style.time}>
           {Math.floor(timeLeft / 60)}:
           {(timeLeft % 60).toString().padStart(2, "0")}
         </div>
       </div>
-      <button className={style.timerBtn} onClick={() => setIsRunning((prev) => !prev)}>
+      <button
+        className={`${style.timerBtn} ${isRunning ? style.pause : style.start}`}
+        onClick={() => setIsRunning((prev) => !prev)}
+      >
         {isRunning ? "일시정지" : "시작하기"}
       </button>
     </>

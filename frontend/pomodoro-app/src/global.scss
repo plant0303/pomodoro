@@ -26,13 +26,14 @@ button {
   width: 80%;
   border: 1px solid $dark-background-color;
   border-radius: 50px;
+  background-color: #ddd;
   color: $light-text-color;
   padding: 10px 20px;
   border: none;
   cursor: pointer;
   transition: 0.1s ease-in-out;
   &:hover {
-    background-color: darken($primary-color, 10%);
+    background-color: #ccc;
   }
 }
 
