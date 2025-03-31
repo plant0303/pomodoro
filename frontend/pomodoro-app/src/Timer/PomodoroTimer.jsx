@@ -1,68 +1,61 @@
-import React, { useState } from "react";
-// import styled from "styled-components";
+import React, { useState, useEffect } from "react";
 import style from "../css/Timer/PomodoroTimer.module.scss";
+const PomodoroTimer = ({ initialMinutes = 20 }) => {
+  const [timeLeft, setTimeLeft] = useState(initialMinutes * 60);
+  const [isRunning, setIsRunning] = useState(false);
+  const radius = 50;
+  const circumference = 2 * Math.PI * radius;
 
-const PomodoroTimer = () => {
-  const time = 20;
-  const total_time = 60 * 60;
-  const start_time = time * 60; // 20분 -> 1200초
-  const CIRCLE_CIRCUMFERENCE = 283; // 원 둘레
+  useEffect(() => {
+    if (!isRunning) return;
 
-  const INITIAL_DASHARRAY = `${
-    (start_time / total_time) * CIRCLE_CIRCUMFERENCE
-  } ${CIRCLE_CIRCUMFERENCE}`;
-
-  const [timerDasharray, setTimerDasharray] = useState(INITIAL_DASHARRAY);
-  const [isTimerRunning, setIsTimerRunning] = useState(false);
-  const [timeLeft, setTimeLeft] = useState(start_time);
-
-  console.log(timerDasharray);
-
-  const startTimer = () => {
     const interval = setInterval(() => {
-      /* 
-            전체 원이 283
-            타이머가 start_time / 3600초 * 원의 둘레
-            이게 하나씩 작아져야됨
-            작아지는건 start_time이 되겠지...?
-            start_time에서 0이 될때까지 반복을 해야돼
-            만약 start_time이 0이 아니라면? 0이 될때까지 반복
-            */
-      if (start_time == 0) {
-        return 0;
-      } else {
-        setTimeLeft((prev) => prev - 1);
-        setTimerDasharray(
-          `${
-            ((timeLeft - 1) / total_time) * CIRCLE_CIRCUMFERENCE
-          } ${CIRCLE_CIRCUMFERENCE}`
-        );
-      }
-    }, 100);
-  };
+      setTimeLeft((prev) => {
+        if (prev <= 1) {
+          clearInterval(interval);
+          return 0;
+        }
+        return prev - 1;
+      });
+    }, 1000);
+
+    return () => clearInterval(interval);
+  }, [isRunning]);
+
+  const strokeDashoffset = circumference - (timeLeft / 3600) * circumference;
 
   return (
     <>
-      <svg className={style.timerSvg} viewBox="0 0 100 100">
-        <g className={style.timerCircle}>
-          <path
-            className={style.timerCircleBase}
-            d="M 50, 50
-        m -45, 0
-        a 45,45 0 1,0 90,0
-        a 45,45 0 1,0 -90,0"
-          ></path>
+      <div className={style.timerCont}>
+        <svg viewBox="0 0 120 120">
+          <defs>
+            <linearGradient id="grad" x1="0%" y1="100%" x2="80%" y2="100%">
+              <stop offset="0%" stopColor="#ffd455" />
+              <stop offset="100%" stopColor="#ff4500" />
+            </linearGradient>
+          </defs>
           <circle
-            className={style.timerPath}
-            strokeDasharray={timerDasharray} // strokeDasharray 값으로 원의 진행 상태를 제어
-            cx="50"
-            cy="50"
-            r="45"
-          ></circle>
-        </g>
-      </svg>
-      <button onClick={startTimer} disabled={isTimerRunning}>
-        {isTimerRunning ? "타이머 진행 중" : "시작하기"}
+            className={style.timerBackground}
+            cx="60"
+            cy="60"
+            r={radius}
+          />
+          <circle
+            className={style.timerStroke}
+            cx="60"
+            cy="60"
+            r={radius}
+            strokeDasharray={circumference}
+            strokeDashoffset={strokeDashoffset}
+          />
+        </svg>
+        <div className={style.time}>
+          {Math.floor(timeLeft / 60)}:
+          {(timeLeft % 60).toString().padStart(2, "0")}
+        </div>
+      </div>
+      <button className={style.timerBtn} onClick={() => setIsRunning((prev) => !prev)}>
+        {isRunning ? "일시정지" : "시작하기"}
       </button>
     </>
   );
