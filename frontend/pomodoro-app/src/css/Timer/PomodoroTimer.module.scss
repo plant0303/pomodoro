@@ -44,16 +44,22 @@
   }
 }
 
-.timerBtn {
+.btnCont{
   position: absolute;
+  width: 80%;
   bottom: max(5vh, 15%);
-  width: 50%;
-}
-.start {
-  background-color: $primary-color;
-  &:hover {
-    background-color: #ffcd35;
+  .timerBtn {
+    width: 48%;
+    margin-left: 5px;
   }
+  .start {
+    width: 100%;
+    background-color: $primary-color;
+    &:hover {
+      background-color: #ffcd35;
+    }
+  }
+
 }
 
 .timerCont > svg {
@@ -82,9 +88,18 @@
   .timerCont > svg {
     height: min(40vh, 400px); /* 세로 크기 40% 또는 최대 400px */
   }
-  .timerBtn {
-    position: absolute;
-    bottom: max(2vh, 2%);
-    width: 50%;
+
+  .btnCont{
+    padding: 0px min(14vw, 30%);
+    width: 100%;
+    bottom: max(5vh, 5%);
+    .timerBtn {
+      width: 48%;
+      margin-left: 5px;
+    }
+    .start {
+      width: 100%;
+      background-color: $primary-color;
+    }
   }
 }

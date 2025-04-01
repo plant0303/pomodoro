@@ -66,6 +66,12 @@ const PomodoroTimer = () => {
 
   const strokeDashoffset = circumference - (timeLeft / 3600) * circumference;
 
+    //타이머 리셋
+    const handleReset = () => {
+      setIsRunning(false);
+      setTimeLeft(initialMinutes * 60);
+    }
+
   return (
     <>
       <div className={style.timerCont}>
@@ -98,12 +104,20 @@ const PomodoroTimer = () => {
           {(timeLeft % 60).toString().padStart(2, "0")}
         </div>
       </div>
-      <button
-        className={`${style.timerBtn} ${isRunning ? style.pause : style.start}`}
-        onClick={() => setIsRunning((prev) => !prev)}
-      >
-        {isRunning ? "일시정지" : "시작하기"}
-      </button>
+
+        {isRunning ?
+        <div className={style.btnCont}>
+          <button className={`${style.timerBtn} ${isRunning ? style.pause : style.start}`}
+                  onClick={() => setIsRunning((prev) => !prev)}>일시정지</button>
+          <button className={`${style.timerBtn} ${isRunning ? style.pause : style.start}`}
+                  onClick={handleReset}>초기화</button>                 
+        </div>
+        : 
+        <div className={style.btnCont}>
+          <button className={`${style.timerBtn} ${isRunning ? style.pause : style.start}`}
+                  onClick={() => setIsRunning((prev) => !prev)}>시작하기</button>
+        </div>
+        }
     </>
   );
 };
