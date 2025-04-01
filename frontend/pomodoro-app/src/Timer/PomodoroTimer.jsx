@@ -72,21 +72,21 @@ const PomodoroTimer = () => {
     setAngle(angle);
   };
 
-const handleMouseMove = (e) => {
-  if (!isDragging) return;
-
-  const centerX = 60;
-  const centerY = 60;
-  const mouseX = e.clientX - e.target.getBoundingClientRect().left;
-  const mouseY = e.clientY - e.target.getBoundingClientRect().top;
-  const newAngle = Math.atan2(mouseY - centerY, mouseX - centerX);
-  const angleDifference = newAngle - angle;
-  const minutesChange = (angleDifference / (2 * Math.PI)) * 60;
-
-  setTimeLeft((prevTime) => Math.min(3600, Math.max(0, prevTime + minutesChange * 60))); // 60분 제한 적용
-
-  setAngle(newAngle);
-};
+  const handleMouseMove = (e) => {
+    if (!isDragging) return;
+  
+    const centerX = 60;
+    const centerY = 60;
+    const mouseX = e.clientX - e.target.getBoundingClientRect().left;
+    const mouseY = e.clientY - e.target.getBoundingClientRect().top;
+    const newAngle = Math.atan2(mouseY - centerY, mouseX - centerX);
+    const angleDifference = newAngle - angle;
+    const minutesChange = (angleDifference / (2 * Math.PI)) * 60;
+  
+    setTimeLeft((prevTime) => Math.floor(Math.min(3600, Math.max(0, prevTime + minutesChange * 60)))); // 60분 제한 적용
+  
+    setAngle(newAngle);
+  };
 
   const handleMouseUp = () => {
     setIsDragging(false);
