@@ -70,6 +70,7 @@ const PomodoroTimer = () => {
     const mouseY = e.clientY - e.target.getBoundingClientRect().top;
     const angle = Math.atan2(mouseY - centerY, mouseX - centerX);
     setAngle(angle);
+
   };
 
   const handleMouseMove = (e) => {

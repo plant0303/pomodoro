@@ -36,11 +36,18 @@
 
   .time {
     position: absolute;
-    display: block;
+    display: flex;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    font-size: 24px;
+
+    .timeValue{
+      width: 30px;
+      font-size: 24px;
+      border: none;
+      background-color: none;
+      text-align: center;
+    }
   }
 }
 
@@ -103,3 +110,5 @@
     }
   }
 }
+
+

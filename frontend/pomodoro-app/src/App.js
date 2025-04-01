@@ -2,6 +2,7 @@ import logo from "./logo.svg";
 import "./default.css";
 import "./main.css";
 import PomodoroTimer from "./Timer/PomodoroTimer";
+import PomodoroTimerTest from './Timer/PomodoroTimerTest';
 import TodoList from "./Todo/TodoList";
 function App() {
   return (
@@ -16,7 +17,8 @@ function App() {
       </header>
       <div className="cont">
         <div className="timer">
-          <PomodoroTimer></PomodoroTimer>
+          <PomodoroTimerTest></PomodoroTimerTest>
+          {/* <PomodoroTimer></PomodoroTimer> */}
         </div>
         <div className="todo">
           <TodoList></TodoList>
