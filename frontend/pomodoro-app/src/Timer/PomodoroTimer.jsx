@@ -1,7 +1,10 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import style from "../css/Timer/PomodoroTimer.module.scss";
 
 const PomodoroTimer = () => {
+  
+  const [state, setState] = useState('waitingWork');
+
   // 공부시간
   const [isRunning, setIsRunning] = useState(false); // 실행여부 관리
   const [initialMinutes, setInitialMinutes] = useState(25); //기본 시간
@@ -46,6 +49,52 @@ const PomodoroTimer = () => {
     );
   });
 
+  /*
+  waitingWork: 공부 시작 전
+  startWork: 공부 중
+  waitingBreak: 공부 완료, 휴식 전
+  startBreak: 휴식중
+  */
+  const renderControlButtons  = useCallback(() => {
+    if(state === 'waitingWork') {
+      return(
+        <>
+          <button
+            className={`${style.timerBtn} ${style.start}`}
+            onClick={() => setState('startWork')}
+          >
+            시작하기
+          </button>
+        </>
+      );
+    } else if(state === 'startWork'){
+      return(
+        <>
+          <button className={`${style.timerBtn} ${isRunning ? style.pause : style.start}`} 
+          onClick={() => setIsRunning((prev) => !prev)}>
+            일시정지
+          </button>
+          <button
+            className={`${style.timerBtn} ${isRunning ? style.pause : style.start}`} onClick={handleReset}>
+            초기화
+          </button>
+        </>
+      );
+    } else if(state === 'waitingBreak'){
+      return(
+        <>
+          <button className={`${style.timerBtn} ${style.start}`} onClick={handleBreakStart}>휴식 시작</button>
+          <button className={`${style.timerBtn} ${style.skip}`} onClick={handleSkipBreak}>휴식 스킵</button>
+        </>
+      );
+    } else if(state === 'startBreak'){
+      return(
+        <>
+          <button className={`${style.timerBtn} ${style.skip}`} onClick={handleSkipBreak}>휴식 스킵</button>
+        </>
+      );  
+    }
+  })
   useEffect(() => {
     if (!isRunning) return;
 
@@ -209,43 +258,9 @@ const PomodoroTimer = () => {
         </div>
       </div>
 
-      {timeLeft === 0 && isBreakTime ? (
-        // 뽀모도로 완료 후, 휴식 진입 전
-        <div className={style.btnCont}>
-          <button className={`${style.timerBtn} ${style.start}`} onClick={handleBreakStart}>휴식 시작</button>
-          <button className={`${style.timerBtn} ${style.skip}`} onClick={handleSkipBreak}>휴식 스킵</button>
-        </div>
-      ): isBreakTime ? (
-        // 휴식 진행 중
-        <div className={style.btnCont}>
-          <button className={`${style.timerBtn} ${style.pause}`} onClick={() => setIsRunning(false)}>일시정지</button>
-          <button className={`${style.timerBtn} ${style.pause}`} onClick={handleSkipBreak}>휴식 스킵</button>
-        </div>
-      ) : isRunning ? (
-        // 타이머 진행중
-        <div className={style.btnCont}>
-          <button className={`${style.timerBtn} ${isRunning ? style.pause : style.start}`} 
-          onClick={() => setIsRunning((prev) => !prev)}>
-            일시정지
-          </button>
-          <button
-            className={`${style.timerBtn} ${isRunning ? style.pause : style.start}`} onClick={handleReset}>
-            초기화
-          </button>
-        </div>
-      ) : (
-        // 타이머 정지
-        <div className={style.btnCont}>
-          <button
-            className={`${style.timerBtn} ${
-              isRunning ? style.pause : style.start
-            }`}
-            onClick={() => setIsRunning((prev) => !prev)}
-          >
-            시작하기
-          </button>
-        </div>
-      )}
+      <div className={style.btnCont}>
+        {renderControlButtons()}
+      </div>
     </>
   );
 };
