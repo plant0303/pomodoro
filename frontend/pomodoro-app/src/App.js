@@ -17,8 +17,8 @@ function App() {
       </header>
       <div className="cont">
         <div className="timer">
-          <PomodoroTimerTest></PomodoroTimerTest>
-          {/* <PomodoroTimer></PomodoroTimer> */}
+          {/* <PomodoroTimerTest></PomodoroTimerTest> */}
+          <PomodoroTimer></PomodoroTimer>
         </div>
         <div className="todo">
           <TodoList></TodoList>
