@@ -2,11 +2,19 @@ import React, { useState, useEffect } from "react";
 import style from "../css/Timer/PomodoroTimer.module.scss";
 
 const PomodoroTimer = () => {
-  const [initialMinutes, setInitialMinutes] = useState(40);  //기본 시간
-  const [timeLeft, setTimeLeft] = useState(initialMinutes * 60);  // 시간 변경사항 업데이트
-  const [isRunning, setIsRunning] = useState(false);  // 실행여부 관리
-  const [angle, setAngle] = useState(null);  // 각도 변경
-  const [isDragging, setIsDragging] = useState(false);  // 드래그 상태 관리
+  // 공부시간
+  const [initialMinutes, setInitialMinutes] = useState(40); //기본 시간
+  const [timeLeft, setTimeLeft] = useState(initialMinutes * 60); // 시간 변경사항 업데이트
+
+  //휴식시간
+  const [isBreakTime, setIsBreakTiime] = useState(false); // 휴식시간 변경사항 관리
+  const [breakTime, setBreakTime] = useState(15);
+  const [breakTimeLeft, setBreakTimeLeft] = useState(breakTime * 60);
+
+  // 타이머 상태
+  const [isRunning, setIsRunning] = useState(false); // 실행여부 관리
+  const [angle, setAngle] = useState(null); // 각도 변경
+  const [isDragging, setIsDragging] = useState(false); // 드래그 상태 관리
   const radius = 50; // 반지름
   const circumference = 2 * Math.PI * radius; // 원의 둘레
 
@@ -44,6 +52,7 @@ const PomodoroTimer = () => {
     const interval = setInterval(() => {
       setTimeLeft((prev) => {
         if (prev <= 1) {
+          setIsBreakTiime(true);
           clearInterval(interval);
           return 0;
         }
@@ -54,20 +63,21 @@ const PomodoroTimer = () => {
     return () => clearInterval(interval);
   }, [isRunning]);
 
-  const strokeDashoffset = circumference - (Math.floor(timeLeft) / 3600) * circumference;
+  const strokeDashoffset =
+    circumference - (Math.floor(timeLeft) / 3600) * circumference;
 
   //타이머 리셋
   const handleReset = () => {
     setIsRunning(false);
     setTimeLeft(initialMinutes * 60);
   };
-  
+
   // 각도 계산 함수
   const calculateAngleAndTime = (e) => {
     const rect = e.target.getBoundingClientRect();
     const svgX = ((e.clientX - rect.left) / rect.width) * 120;
     const svgY = ((e.clientY - rect.top) / rect.height) * 120;
-    
+
     let angle = Math.atan2(svgY - 60, svgX - 60) * (180 / Math.PI);
     angle = (angle + 90 + 360) % 360; // 12시=0°
 
@@ -76,10 +86,9 @@ const PomodoroTimer = () => {
     return { angle, minutes };
   };
 
-
   // 마우스 이벤트 핸들러
   const handleMouseDown = (e) => {
-    if(isRunning) return;
+    if (isRunning) return;
     setIsDragging(true);
     const { minutes } = calculateAngleAndTime(e);
     setTimeLeft(minutes * 60);
@@ -97,53 +106,119 @@ const PomodoroTimer = () => {
     setIsDragging(false);
   };
 
-  // 타이머 입력받기
+  // 공부 시간 입력 핸들러
   const handleInputValue = (e) => {
+    if(isRunning) return;
+    let inputValue = e.target.value;
+    inputValue = inputValue.replace(/[^0-9]/g, '');
+    // 60 이상 숫자 입력 못하게
+    if(inputValue > 60){
+      inputValue = 60;
+    }
+    // 두자리 이상 숫자 입력 못하게
+    if(inputValue.length > 2){
+      inputValue = inputValue.slice(1); // 첫 번째 문자 제거
+    }
+
+    setInitialMinutes(inputValue);
+    setTimeLeft(inputValue * 60);
+
+    // if (isRunning) return;
+    // const value = Math.min(parseInt(e.target.value) || 0, 60);
+    // setInitialMinutes(value);
+    // setTimeLeft(value * 60);
+    // console.log(initialMinutes);
+  };
+
+  // 휴식시간 입력
+  const handleInputBreak = (e) => {
+    if(isRunning) return;
     const value = Math.min(parseInt(e.target.value) || 0, 60);
-    setTimeLeft(value * 60);
+    setBreakTime(value);
+    setBreakTimeLeft(value * 60);
   }
 
-  console.log(timeLeft);
+
   return (
     <>
       <div className={style.timerCont}>
-      <svg
-        className={`${!isRunning && style.svgStart}`}
-        viewBox="0 0 120 120"
-        onMouseDown={handleMouseDown}
-        onMouseMove={handleMouseMove}
-        onMouseUp={handleMouseUp}
-        onMouseLeave={handleMouseUp}
-      >
-        <defs>
-          <linearGradient id="grad" x1="0%" y1="100%" x2="80%" y2="100%">
-            <stop offset="0%" stopColor="#ffd455" />
-            <stop offset="100%" stopColor="#ff4500" />
-          </linearGradient>
-        </defs>
-        <circle className={style.timerBackground} cx="60" cy="60" r={radius} />
-        <circle
-          className={style.timerStroke}
-          cx="60"
-          cy="60"
-          r={radius}
-          strokeDasharray={circumference}
-          strokeDashoffset={strokeDashoffset}
-        />
-        {tickMarks}
-      </svg>
+        <svg
+          className={`${!isRunning && style.svgStart}`}
+          viewBox="0 0 120 120"
+          onMouseDown={handleMouseDown}
+          onMouseMove={handleMouseMove}
+          onMouseUp={handleMouseUp}
+          onMouseLeave={handleMouseUp}
+        >
+          <defs>
+            <linearGradient id="grad" x1="0%" y1="100%" x2="80%" y2="100%">
+              <stop offset="0%" stopColor="#ffd455" />
+              <stop offset="100%" stopColor="#ff4500" />
+            </linearGradient>
+          </defs>
+          <circle
+            className={style.timerBackground}
+            cx="60"
+            cy="60"
+            r={radius}
+          />
+          <circle
+            className={style.timerStroke}
+            cx="60"
+            cy="60"
+            r={radius}
+            strokeDasharray={circumference}
+            strokeDashoffset={strokeDashoffset}
+          />
+          {tickMarks}
+        </svg>
 
         <div className={style.time}>
-          <input className={style.timeValue} type="number" 
-                  value={Math.floor(timeLeft / 60)}
-                  onChange={handleInputValue}></input>
-          :
-          <input className={style.timeValue} type="number" value={(timeLeft % 60).toString().padStart(2, "0")} readOnly></input>
-          {/* {Math.floor(timeLeft / 60)}: */}
-          {/* {(timeLeft % 60).toString().padStart(2, "0")} */}
+          {/* 공부시간 */}
+          <div>
+            <p>pomodoro</p>
+            <input
+                className={style.timeValue}
+                type="number"
+                min="1"
+                max="60"
+                value={Math.floor(timeLeft / 60)}
+                onChange={handleInputValue}></input>
+            :
+            <input
+              className={style.timeValue}
+              type="number"
+              value={(timeLeft % 60).toString().padStart(2, "0")}></input>
+          </div>
+          {/* 휴식시간 */}
+          <div>
+            <p>Break</p>
+            <input
+              className={style.timeValue}
+              type="number"
+              min="0"
+              max="60"
+              value={Math.floor(breakTimeLeft / 60)}
+              onChange={handleInputBreak}></input>
+            :
+            <input className={style.timeValue} type="number" value={(breakTimeLeft % 60).toString().padStart(2, "0")} readOnly
+            ></input>
+          </div>
         </div>
       </div>
-      {isRunning ? (
+
+      {timeLeft === 0 && isBreakTime ? (
+        // 뽀모도로 완료 후, 휴식 진입 전
+        <div className={style.btnCont}>
+          <button
+            className={`${style.timerBtn} ${style.start}`}
+            onClick={() => setIsRunning((prev) => !prev)}
+          >
+            휴식 시작
+          </button>
+        </div>
+      ) : isRunning ? (
+        // 타이머 진행중
         <div className={style.btnCont}>
           <button
             className={`${style.timerBtn} ${
@@ -163,6 +238,7 @@ const PomodoroTimer = () => {
           </button>
         </div>
       ) : (
+        // 타이머 정지
         <div className={style.btnCont}>
           <button
             className={`${style.timerBtn} ${
