@@ -108,36 +108,21 @@ const PomodoroTimer = () => {
 
   // 공부 시간 입력 핸들러
   const handleInputValue = (e) => {
-    if(isRunning) return;
-    let inputValue = e.target.value;
-    inputValue = inputValue.replace(/[^0-9]/g, '');
-    // 60 이상 숫자 입력 못하게
-    if(inputValue > 60){
-      inputValue = 60;
-    }
-    // 두자리 이상 숫자 입력 못하게
-    if(inputValue.length > 2){
-      inputValue = inputValue.slice(1); // 첫 번째 문자 제거
-    }
+    if (isRunning) return;
+    let value = e.target.value;
 
-    setInitialMinutes(inputValue);
-    setTimeLeft(inputValue * 60);
-
-    // if (isRunning) return;
-    // const value = Math.min(parseInt(e.target.value) || 0, 60);
-    // setInitialMinutes(value);
-    // setTimeLeft(value * 60);
-    // console.log(initialMinutes);
+    const numValue = value === "" ? 0 : Math.min(parseInt(value, 10), 60);
+    setInitialMinutes(numValue);
+    setTimeLeft(numValue * 60);
   };
 
   // 휴식시간 입력
   const handleInputBreak = (e) => {
-    if(isRunning) return;
+    if (isRunning) return;
     const value = Math.min(parseInt(e.target.value) || 0, 60);
     setBreakTime(value);
     setBreakTimeLeft(value * 60);
-  }
-
+  };
 
   return (
     <>
@@ -178,30 +163,37 @@ const PomodoroTimer = () => {
           <div>
             <p>pomodoro</p>
             <input
-                className={style.timeValue}
-                type="number"
-                min="1"
-                max="60"
-                value={Math.floor(timeLeft / 60)}
-                onChange={handleInputValue}></input>
+              className={style.timeValue}
+              type="text"
+              min="1"
+              max="60"
+              value={Math.floor(timeLeft / 60)}
+              onChange={handleInputValue}
+            ></input>
             :
             <input
               className={style.timeValue}
-              type="number"
-              value={(timeLeft % 60).toString().padStart(2, "0")}></input>
+              type="text"
+              value={(timeLeft % 60).toString().padStart(2, "0")}
+            ></input>
           </div>
           {/* 휴식시간 */}
           <div>
             <p>Break</p>
             <input
               className={style.timeValue}
-              type="number"
+              type="text"
               min="0"
               max="60"
               value={Math.floor(breakTimeLeft / 60)}
-              onChange={handleInputBreak}></input>
+              onChange={handleInputBreak}
+            ></input>
             :
-            <input className={style.timeValue} type="number" value={(breakTimeLeft % 60).toString().padStart(2, "0")} readOnly
+            <input
+              className={style.timeValue}
+              type="text"
+              value={(breakTimeLeft % 60).toString().padStart(2, "0")}
+              readOnly
             ></input>
           </div>
         </div>
