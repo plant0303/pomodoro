@@ -2,13 +2,13 @@ import React, { useState, useEffect } from "react";
 import style from "../css/Timer/PomodoroTimer.module.scss";
 
 const PomodoroTimer = () => {
-  const [initialMinutes, setInitialMinutes] = useState(40);
-  const [timeLeft, setTimeLeft] = useState(initialMinutes * 60);
-  const [isRunning, setIsRunning] = useState(false);
-  const [angle, setAngle] = useState(null);
-  const [isDragging, setIsDragging] = useState(false);
-  const radius = 50;
-  const circumference = 2 * Math.PI * radius;
+  const [initialMinutes, setInitialMinutes] = useState(40);  //기본 시간
+  const [timeLeft, setTimeLeft] = useState(initialMinutes * 60);  // 시간 변경사항 업데이트
+  const [isRunning, setIsRunning] = useState(false);  // 실행여부 관리
+  const [angle, setAngle] = useState(null);  // 각도 변경
+  const [isDragging, setIsDragging] = useState(false);  // 드래그 상태 관리
+  const radius = 50; // 반지름
+  const circumference = 2 * Math.PI * radius; // 원의 둘레
 
   // 눈금
   const tickMarks = Array.from({ length: 60 }, (_, i) => {
@@ -17,20 +17,20 @@ const PomodoroTimer = () => {
       <line
         key={i}
         x1="60"
-        y1="18"
+        y1="20"
         x2="60"
-        y2="15"
+        y2="17"
         stroke="#ccc"
-        strokeWidth="0.5"
+        strokeWidth="0.7"
         transform={`rotate(${angle} 60 60)`}
       />
     ) : (
       <line
         key={i}
         x1="60"
-        y1="17"
+        y1="19"
         x2="60"
-        y2="15"
+        y2="17"
         stroke="#ccc"
         strokeWidth="0.2"
         transform={`rotate(${angle} 60 60)`}
@@ -60,7 +60,6 @@ const PomodoroTimer = () => {
   const handleReset = () => {
     setIsRunning(false);
     setTimeLeft(initialMinutes * 60);
-    console.log(timeLeft);
   };
   
   // 각도 계산 함수
@@ -98,6 +97,13 @@ const PomodoroTimer = () => {
     setIsDragging(false);
   };
 
+  // 타이머 입력받기
+  const handleInputValue = (e) => {
+    const value = Math.min(parseInt(e.target.value) || 0, 60);
+    setTimeLeft(value * 60);
+  }
+
+  console.log(timeLeft);
   return (
     <>
       <div className={style.timerCont}>
@@ -128,8 +134,13 @@ const PomodoroTimer = () => {
       </svg>
 
         <div className={style.time}>
-          {Math.floor(timeLeft / 60)}:
-          {(timeLeft % 60).toString().padStart(2, "0")}
+          <input className={style.timeValue} type="number" 
+                  value={Math.floor(timeLeft / 60)}
+                  onChange={handleInputValue}></input>
+          :
+          <input className={style.timeValue} type="number" value={(timeLeft % 60).toString().padStart(2, "0")} readOnly></input>
+          {/* {Math.floor(timeLeft / 60)}: */}
+          {/* {(timeLeft % 60).toString().padStart(2, "0")} */}
         </div>
       </div>
       {isRunning ? (

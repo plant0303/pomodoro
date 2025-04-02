@@ -40,12 +40,12 @@
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-
+  
     .timeValue{
       width: 30px;
       font-size: 24px;
       border: none;
-      background-color: none;
+      background-color: transparent;
       text-align: center;
     }
   }
