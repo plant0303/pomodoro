@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import style from "../css/Timer/PomodoroTimer.module.scss";
 
 const PomodoroTimer = () => {
-  const initialMinutes = 40;
+  const [initialMinutes, setInitialMinutes] = useState(40);
   const [timeLeft, setTimeLeft] = useState(initialMinutes * 60);
   const [isRunning, setIsRunning] = useState(false);
   const [angle, setAngle] = useState(null);
@@ -60,6 +60,7 @@ const PomodoroTimer = () => {
   const handleReset = () => {
     setIsRunning(false);
     setTimeLeft(initialMinutes * 60);
+    console.log(timeLeft);
   };
   
   // 각도 계산 함수
@@ -83,12 +84,14 @@ const PomodoroTimer = () => {
     setIsDragging(true);
     const { minutes } = calculateAngleAndTime(e);
     setTimeLeft(minutes * 60);
+    setInitialMinutes(minutes);
   };
 
   const handleMouseMove = (e) => {
     if (!isDragging) return;
     const { minutes } = calculateAngleAndTime(e);
     setTimeLeft(minutes * 60);
+    setInitialMinutes(minutes);
   };
 
   const handleMouseUp = () => {
