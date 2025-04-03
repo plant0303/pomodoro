@@ -2,8 +2,7 @@ import React, { useState, useEffect, useCallback } from "react";
 import style from "../css/Timer/PomodoroTimer.module.scss";
 
 const PomodoroTimer = () => {
-  
-  const [state, setState] = useState('waitingWork');
+  const [state, setState] = useState("waitingWork");
 
   // 공부시간
   const [isRunning, setIsRunning] = useState(false); // 실행여부 관리
@@ -11,7 +10,7 @@ const PomodoroTimer = () => {
   const [timeLeft, setTimeLeft] = useState(initialMinutes * 60); // 시간 변경사항 업데이트
 
   //휴식시간
-  const [isBreakTime, setIsBreakTiime] = useState(false); // 휴식시간 변경사항 관리
+  const [isBreakTime, setIsBreakTime] = useState(false); // 휴식시간 변경사항 관리
   const [breakTime, setBreakTime] = useState(5);
   const [breakTimeLeft, setBreakTimeLeft] = useState(breakTime * 60);
 
@@ -55,46 +54,82 @@ const PomodoroTimer = () => {
   waitingBreak: 공부 완료, 휴식 전
   startBreak: 휴식중
   */
-  const renderControlButtons  = useCallback(() => {
-    if(state === 'waitingWork') {
-      return(
+  const renderControlButtons = useCallback(() => {
+    if (state === "waitingWork") {
+      return (
         <>
           <button
             className={`${style.timerBtn} ${style.start}`}
-            onClick={() => setState('startWork')}
+            onClick={() => {
+              setState("startWork");
+              setIsRunning(true);
+            }}
           >
             시작하기
           </button>
         </>
       );
-    } else if(state === 'startWork'){
-      return(
+    } else if (state === "startWork") {
+      return (
         <>
-          <button className={`${style.timerBtn} ${isRunning ? style.pause : style.start}`} 
-          onClick={() => setIsRunning((prev) => !prev)}>
-            일시정지
+          <button
+            className={`${style.timerBtn} ${
+              isRunning ? style.pause : style.start
+            }`}
+            onClick={() => setIsRunning((prev) => !prev)}
+          >
+            {isRunning ? "일시정지" : "계속하기"}
           </button>
           <button
-            className={`${style.timerBtn} ${isRunning ? style.pause : style.start}`} onClick={handleReset}>
+            className={`${style.timerBtn} ${style.reset}`}
+            onClick={handleReset}
+          >
             초기화
           </button>
         </>
       );
-    } else if(state === 'waitingBreak'){
-      return(
+    } else if (state === "waitingBreak") {
+      return (
         <>
-          <button className={`${style.timerBtn} ${style.start}`} onClick={handleBreakStart}>휴식 시작</button>
-          <button className={`${style.timerBtn} ${style.skip}`} onClick={handleSkipBreak}>휴식 스킵</button>
+          <button
+            className={`${style.timerBtn} ${style.start}`}
+            onClick={() => {
+              setState("startBreak");
+              setIsBreakTime(true);
+            }}
+          >
+            휴식 시작
+          </button>
+          <button
+            className={`${style.timerBtn} ${style.skip}`}
+            onClick={handleSkipBreak}
+          >
+            휴식 스킵
+          </button>
         </>
       );
-    } else if(state === 'startBreak'){
-      return(
+    } else if (state === "startBreak") {
+      return (
         <>
-          <button className={`${style.timerBtn} ${style.skip}`} onClick={handleSkipBreak}>휴식 스킵</button>
+          <button
+            className={`${style.timerBtn} ${
+              isBreakTime ? style.pause : style.start
+            }`}
+            onClick={() => setIsRunning((prev) => !prev)}
+          >
+            {isBreakTime ? "일시정지" : "계속하기"}
+          </button>
+          <button
+            className={`${style.timerBtn} ${style.skip}`}
+            onClick={handleSkipBreak}
+          >
+            휴식 스킵
+          </button>
         </>
-      );  
+      );
     }
-  })
+  }, [state, isRunning]);
+
   useEffect(() => {
     if (!isRunning) return;
 
@@ -102,7 +137,7 @@ const PomodoroTimer = () => {
       setTimeLeft((prev) => {
         if (prev <= 1) {
           setIsRunning(false);
-          setIsBreakTiime(true);
+          setState('waitingBreak');
           clearInterval(interval);
           return 0;
         }
@@ -120,6 +155,7 @@ const PomodoroTimer = () => {
   const handleReset = () => {
     setIsRunning(false);
     setTimeLeft(initialMinutes * 60);
+    setState("waitingWork");
   };
 
   // 각도 계산 함수
@@ -177,12 +213,15 @@ const PomodoroTimer = () => {
   // 휴식시간 시작
   const handleBreakStart = () => {
     setIsRunning(true);
-  }
+  };
 
   // 휴식 스킵
   const handleSkipBreak = () => {
-
-  }
+    setIsBreakTime(false);
+    setState('waitingWork');
+    setTimeLeft(initialMinutes * 60);
+    console.log(initialMinutes);
+  };
   return (
     <>
       <div className={style.timerCont}>
@@ -258,9 +297,7 @@ const PomodoroTimer = () => {
         </div>
       </div>
 
-      <div className={style.btnCont}>
-        {renderControlButtons()}
-      </div>
+      <div className={style.btnCont}>{renderControlButtons()}</div>
     </>
   );
 };
