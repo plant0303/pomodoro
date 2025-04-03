@@ -49,11 +49,21 @@
       font-size: 14px;
     }
     .timeValue{
-      width: 30px;
+      width: 70px;
       font-size: 24px;
       border: none;
       background-color: transparent;
       text-align: center;
+    }
+
+    .settings{
+      display: flex;
+
+      input{
+        width: 50px;
+        border: none;
+        background-color: transparent;
+      }
     }
   }
 }
@@ -62,6 +72,7 @@
   position: absolute;
   width: 80%;
   bottom: max(5vh, 15%);
+  text-align: center;
   .timerBtn {
     width: 48%;
     margin-left: 5px;
