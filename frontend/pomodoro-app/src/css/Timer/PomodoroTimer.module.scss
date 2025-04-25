@@ -49,18 +49,30 @@
       font-size: 14px;
     }
     .timeValue{
-      width: 70px;
       font-size: 24px;
       border: none;
       background-color: transparent;
       text-align: center;
+
+      .inputCont{
+        display: flex;
+        align-items: baseline;
+
+        input{
+          width: 30px;
+          padding-right: 5px;
+          font-size: 18px;
+        }
+        span{
+          font-size: 16px;
+        }
+      }
     }
 
     .settings{
       display: flex;
 
       input{
-        width: 50px;
         border: none;
         background-color: transparent;
       }

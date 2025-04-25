@@ -227,6 +227,7 @@ const PomodoroTimer = () => {
           <div className={style.settings}>
             <div className={style.timeValue}>
               <label>work</label>
+              <div className={style.inputCont}>
               <input
                 type="text"
                 min="1"
@@ -236,10 +237,13 @@ const PomodoroTimer = () => {
                   updateTimerSettings(0, parseInt(e.target.value) || 0)
                 }
                 disabled={isRunning}
-              /> : 00
+              />
+              <span>min</span>
+              </div>
             </div>
             <div className={style.timeValue}>
               <label>break</label>
+              <div className={style.inputCont}>
               <input
                 type="text"
                 min="1"
@@ -250,6 +254,8 @@ const PomodoroTimer = () => {
                 }
                 disabled={isRunning}
               />
+              <span>min</span>
+              </div>
             </div>
           </div>
         </div>
