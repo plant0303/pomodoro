@@ -49,18 +49,26 @@
       font-size: 14px;
     }
     .timeValue{
-      width: 70px;
-      font-size: 24px;
-      border: none;
-      background-color: transparent;
-      text-align: center;
+      label{
+        font-size: 18px;
+        color: #666;
+      }
+
+      div{
+        display: flex;
+        align-items: center;
+        input{
+          font-size: 24px;
+          text-align: center;
+        }
+      }
     }
 
     .settings{
       display: flex;
 
       input{
-        width: 50px;
+        width: 30px;
         border: none;
         background-color: transparent;
       }

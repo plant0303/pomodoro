@@ -99,12 +99,13 @@ const PomodoroTimer = () => {
   // 각도 계산 함수
   const calculateAngleAndTime = (e) => {
     const rect = e.target.getBoundingClientRect();
+    console.log("rect", rect);
     const svgX = ((e.clientX - rect.left) / rect.width) * 120;
     const svgY = ((e.clientY - rect.top) / rect.height) * 120;
-
+    console.log("svgX, svgY", svgX, svgY);
     let angle = Math.atan2(svgY - 60, svgX - 60) * (180 / Math.PI);
     angle = (angle + 90 + 360) % 360; // 12시=0°
-
+    console.log("angle", angle);
     // 355°~360° → 60분, 나머지는 6°=1분 계산
     const minutes = angle >= 355 ? 60 : Math.round(angle / 6);
     return { angle, minutes };
@@ -227,29 +228,35 @@ const PomodoroTimer = () => {
           <div className={style.settings}>
             <div className={style.timeValue}>
               <label>work</label>
-              <input
-                type="text"
-                min="1"
-                max="60"
-                value={timers[0].duration / 60}
-                onChange={(e) =>
-                  updateTimerSettings(0, parseInt(e.target.value) || 0)
-                }
-                disabled={isRunning}
-              /> : 00
+              <div>
+                <input
+                  type="text"
+                  min="1"
+                  max="60"
+                  value={timers[0].duration / 60}
+                  onChange={(e) =>
+                    updateTimerSettings(0, parseInt(e.target.value) || 0)
+                  }
+                  disabled={isRunning}
+                />
+                <span>min</span>
+              </div>
             </div>
             <div className={style.timeValue}>
               <label>break</label>
-              <input
-                type="text"
-                min="1"
-                max="60"
-                value={timers[1].duration / 60}
-                onChange={(e) =>
-                  updateTimerSettings(1, parseInt(e.target.value) || 0)
-                }
-                disabled={isRunning}
-              />
+              <div>
+                <input
+                  type="text"
+                  min="1"
+                  max="60"
+                  value={timers[1].duration / 60}
+                  onChange={(e) =>
+                    updateTimerSettings(1, parseInt(e.target.value) || 0)
+                  }
+                  disabled={isRunning}
+                />
+                <span>min</span>
+              </div>
             </div>
           </div>
         </div>
@@ -276,14 +283,7 @@ const PomodoroTimer = () => {
             >
               초기화
             </button>
-            {currentTimer.type === "work" ? (
-              <button
-                className={`${style.controlButton} ${style.skip}`}
-                onClick={skipTimer}
-              >
-                휴식 건너뛰기
-              </button>
-            ) : (
+            {currentTimer.type != "work" && (
               <button
                 className={`${style.controlButton} ${style.skip}`}
                 onClick={skipTimer}
