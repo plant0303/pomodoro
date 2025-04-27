@@ -1,10 +1,12 @@
 @import "../../global.scss";
 
+
 .timerCont {
   display: block;
   position: relative;
   width: 100%;
-  height: 80%;
+  height: 60%;
+  margin-top: 100px;
   .timerSVG {
     position: absolute;
     display: block;
@@ -37,7 +39,7 @@
     svg{
       cursor: pointer;
       width: auto;
-      height: min(40vh, 400px);
+      height: min(60vh,  600px);
       max-width: 500px;
       max-height: 500px;
     }
@@ -89,7 +91,6 @@
 }
 
 .btnCont {
-  width: 80%;
   text-align: center;
 
   .controlButton {
@@ -97,8 +98,8 @@
     margin-left: 5px;
   }
 
-  .start {
-    width: 100%;
+  .startButton {
+    width: 80%;
     background-color: $primary-color;
 
     &:hover {
@@ -119,6 +120,17 @@
     height: 50%;
   }
 
+  .timerCont{
+    height: 80%;
+    margin-top: 0;
+    .timerSVG{
+      svg{
+        height: min(40vh,  400px);
+        max-width: 500px;
+        max-height: 500px;
+      }
+    }
+  }
   .todo {
     width: 100%;
     height: 50%;
