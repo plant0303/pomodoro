@@ -191,8 +191,16 @@ const PomodoroTimer = () => {
         >
           <defs>
             <linearGradient id="grad" x1="0%" y1="100%" x2="80%" y2="100%">
-              <stop offset="0%" stopColor="#ffd455" />
-              <stop offset="100%" stopColor="#ff4500" />
+              {currentTimerIndex === 0 ?
+                <>
+                  <stop offset="0%" stopColor="#ffd455" />
+                  <stop offset="100%" stopColor="#ff4500" />
+                </> :
+                <>
+                <stop offset="0%" stopColor="#6EC6FF" />
+                <stop offset="100%" stopColor="#1565C0" />
+                </>
+              }
             </linearGradient>
           </defs>
           <circle
@@ -270,9 +278,8 @@ const PomodoroTimer = () => {
         ) : (
           <>
             <button
-              className={`${style.controlButton} ${
-                isRunning ? style.pause : style.resume
-              }`}
+              className={`${style.controlButton} ${isRunning ? style.pause : style.resume
+                }`}
               onClick={toggleTimer}
             >
               {isRunning ? "일시정지" : "계속하기"}
@@ -294,7 +301,7 @@ const PomodoroTimer = () => {
           </>
         )}
       </div>
-      </>
+    </>
   );
 };
 
