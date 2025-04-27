@@ -182,47 +182,45 @@ const PomodoroTimer = () => {
     <>
       <div className={style.timerCont}>
         <div className={style.timerSVG}>
-        <svg
-          className={`${!isRunning && style.svgStart}`}
-          viewBox="0 0 120 120"
-          onMouseDown={handleMouseDown}
-          onMouseMove={handleMouseMove}
-          onMouseUp={handleMouseUp}
-          onMouseLeave={handleMouseUp}
-        >
-          <defs>
-            <linearGradient id="grad" x1="0%" y1="100%" x2="80%" y2="100%">
-              {currentTimerIndex === 0 ?
-                <>
-                  <stop offset="0%" stopColor="#ffd455" />
-                  <stop offset="100%" stopColor="#ff4500" />
-                </> :
-                <>
-                <stop offset="0%" stopColor="#6EC6FF" />
-                <stop offset="100%" stopColor="#1565C0" />
-                </>
-              }
-            </linearGradient>
-          </defs>
-          <circle
-            className={style.timerBackground}
-            cx="60"
-            cy="60"
-            r={radius}
-          />
-          <circle
-            className={style.timerStroke}
-            cx="60"
-            cy="60"
-            r={radius}
-            strokeDasharray={circumference}
-            strokeDashoffset={strokeDashoffset}
-          />
-          {tickMarks}
-        </svg>
+          <svg
+            className={`${!isRunning && style.svgStart}`}
+            viewBox="0 0 120 120"
+            onMouseDown={handleMouseDown}
+            onMouseMove={handleMouseMove}
+            onMouseUp={handleMouseUp}
+            onMouseLeave={handleMouseUp}
+          >
+            <defs>
+              <linearGradient id="grad" x1="0%" y1="100%" x2="80%" y2="100%">
+                {currentTimerIndex === 0 ?
+                  <>
+                    <stop offset="0%" stopColor="#ffd455" />
+                    <stop offset="100%" stopColor="#ff4500" />
+                  </> :
+                  <>
+                    <stop offset="0%" stopColor="#6EC6FF" />
+                    <stop offset="100%" stopColor="#1565C0" />
+                  </>
+                }
+              </linearGradient>
+            </defs>
+            <circle
+              className={style.timerBackground}
+              cx="60"
+              cy="60"
+              r={radius}
+            />
+            <circle
+              className={style.timerStroke}
+              cx="60"
+              cy="60"
+              r={radius}
+              strokeDasharray={circumference}
+              strokeDashoffset={strokeDashoffset}
+            />
+            {tickMarks}
+          </svg>
         </div>
-      
-
         <div className={style.time}>
           <div className={style.timeDisplay}>
             <div>
@@ -287,18 +285,20 @@ const PomodoroTimer = () => {
             >
               {isRunning ? "일시정지" : "계속하기"}
             </button>
-            <button
-              className={`${style.controlButton} ${style.reset}`}
-              onClick={resetTimer}
-            >
-              초기화
-            </button>
+            {currentTimerIndex === 0 &&
+              <button
+                className={`${style.controlButton} ${style.reset}`}
+                onClick={resetTimer}
+              >
+                초기화
+              </button>
+            }
             {currentTimer.type != "work" && (
               <button
                 className={`${style.controlButton} ${style.skip}`}
                 onClick={skipTimer}
               >
-                공부 시작하기
+                휴식 스킵
               </button>
             )}
           </>
