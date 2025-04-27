@@ -181,6 +181,7 @@ const PomodoroTimer = () => {
   return (
     <>
       <div className={style.timerCont}>
+        <div className={style.timerSVG}>
         <svg
           className={`${!isRunning && style.svgStart}`}
           viewBox="0 0 120 120"
@@ -219,6 +220,8 @@ const PomodoroTimer = () => {
           />
           {tickMarks}
         </svg>
+        </div>
+      
 
         <div className={style.time}>
           <div className={style.timeDisplay}>
