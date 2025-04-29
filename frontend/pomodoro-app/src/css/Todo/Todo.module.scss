@@ -1,8 +1,101 @@
 @import "../../global.scss";
 
-.inputTodo{
-  border: none;
-  border-bottom: 1px solid #666;
-  background: none;
-  width: 60%;
+.todoTitle{
+  font-size: 24px;
+  font-weight: bold;
+}
+
+.todoCont{
+  margin-top: 50px;
+  width: 80%;
+  .inputTodo{
+    border: none;
+    padding-bottom: 5px;
+    border-bottom: 1px solid #aaa ;
+    background: none;
+    width: 100%;
+    font-size: 18px;
+  }
+
+}
+
+.todoList {
+  width: 80%;
+  margin-top: 10px;
+  li{
+    position: relative;
+    padding: 10px 0;
+  }
+  .screenReader {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    border: 0;
+    overflow: hidden;
+    margin: -1px;
+    clip-path: inset(50%);
+  }
+
+  .labelBox {
+    position: relative;
+
+    .checkIcon {
+      width: 1.4em;
+      height: 1.4em;
+      border-radius: 50%;
+      background-color: #fff;
+      border: 1px solid gray;
+      position: absolute;
+      left: 0;
+      top: 50%;
+      transform: translateY(-50%);
+    }
+    
+
+    label {
+      display: block;
+      width: 100%;
+      padding-left: 2.2em;
+      position: relative;
+      cursor: pointer;
+    }
+  }
+  input[type="checkbox"]:checked + .labelBox .checkIcon {
+    border-color: #ffd455;
+    background-color: #ffd455;
+    transition: 0.1s;
+  }
+
+  input[type="checkbox"]:checked + .labelBox label{
+    text-decoration: line-through;
+    color: #666;
+  }
+
+  .menu{
+    cursor: pointer;
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 25px;
+    height: 25px;
+    border-radius: 50%;
+    top: 50%;
+    transform: translateY(-50%);
+    right: 0;
+    transition: 0.2s;
+    span{
+      display: block;
+      width: 3px;
+      height: 3px;
+      background-color: #aaa;
+      border-radius: 100%;
+      margin: 1px 0;
+    }
+  }
+  .menu:hover{
+    background: #ebebeb;
+  }
 }

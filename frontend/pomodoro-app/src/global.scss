@@ -31,14 +31,14 @@ button {
   padding: 10px 20px;
   border: none;
   cursor: pointer;
+
   &:hover {
     background-color: #ccc;
   }
 }
-
 @media screen and (max-width: 900px) {
 
-  button{
+  button {
     width: 50%;
   }
 }
