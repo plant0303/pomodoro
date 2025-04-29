@@ -24,7 +24,12 @@
   margin-top: 10px;
   li{
     position: relative;
-    padding: 10px 0;
+    padding: 10px 5px;
+    transition: 0.2s;
+    border-radius: 3px;
+  }
+  li:hover{
+    background-color: #ebebeb;
   }
   .screenReader {
     position: absolute;
@@ -60,6 +65,7 @@
       position: relative;
       cursor: pointer;
     }
+
   }
   input[type="checkbox"]:checked + .labelBox .checkIcon {
     border-color: #ffd455;
