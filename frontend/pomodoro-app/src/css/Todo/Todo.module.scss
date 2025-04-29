@@ -22,13 +22,13 @@
 .todoList {
   width: 80%;
   margin-top: 10px;
-  li{
+  .todoLi{
     position: relative;
     padding: 10px 5px;
     transition: 0.2s;
     border-radius: 3px;
   }
-  li:hover{
+  .todoLi:hover{
     background-color: #ebebeb;
   }
   .screenReader {
@@ -103,5 +103,25 @@
   }
   .menu:hover{
     background: #ebebeb;
+  }
+
+  .menuPopup{
+    position: absolute;
+    right: 0;
+    width: 100px;
+    background: #fff;
+    border: 1px solid #f3f3f3;
+    z-index: 1;
+    li{
+      width: 100%;
+    }
+    button{
+      width: 100%;
+      border-radius: 0;
+      background-color: #fff;
+    }
+    button:hover{
+      background-color: #ebebeb;
+    }
   }
 }
