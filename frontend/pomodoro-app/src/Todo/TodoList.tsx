@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import global from "../global.scss"
 import style from "../css/Todo/Todo.module.scss";
 
@@ -16,8 +16,7 @@ function TodoList() {
         { id: 3, todo: "할일3" }
     ]);
     const [openMenuId, setOpenMenuId] = useState<number | null>(null); // 두투 메뉴 오픈 상태
-
-    console.log(openMenuId);
+    const menuRef = useRef<HTMLDivElement>(null);
 
     //투두 입력받기
     const activeEnter = (e: React.KeyboardEvent<HTMLInputElement>) => {
@@ -36,6 +35,27 @@ function TodoList() {
     const toggleMunu = (id: number) => {
         setOpenMenuId((prevId) => (prevId === id ? null : id));
     }
+
+    
+    useEffect(() => {
+        const handleClickOutside = (e: MouseEvent) => {
+            if(openMenuId !== null && menuRef.current && !menuRef.current.contains(e.target as Node)){
+                setOpenMenuId(null);
+            }
+        };
+
+
+        document.addEventListener("mousedown", handleClickOutside);
+
+        // 클린업 함수
+        // 컴포넌트가 언마운트 되거나 의존성 배열 값이 변경될 때 실행됨
+        return () => {
+            document.removeEventListener("mousedown", handleClickOutside);
+          };
+    }, [openMenuId]);
+    // 의존성배열 []
+    // openMenuId가 변경될때마다 실행되도록 제어
+
     // 투두 리스트 출력하기
     const printTodo = todoList.map((todo) => {
         return (
@@ -56,7 +76,7 @@ function TodoList() {
                     <span></span>
                 </div>
                 {openMenuId === todo.id &&
-                    <div className={style.menuPopup}>
+                    <div className={style.menuPopup} ref={menuRef}>
                         <ul>
                             <li><button>수정</button></li>
                             <li><button>삭제</button></li>
@@ -66,8 +86,6 @@ function TodoList() {
             </li>
         );
     });
-
-
 
     return (
         <>
