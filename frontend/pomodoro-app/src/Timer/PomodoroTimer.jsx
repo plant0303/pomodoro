@@ -85,6 +85,9 @@ const PomodoroTimer = () => {
   const updateTimerSettings = (index, newDuration) => {
     if (isRunning) return;
 
+    if(newDuration > 60){
+      newDuration = 60;
+    }
     setTimers((prevTimers) => {
       const newTimers = [...prevTimers];
       newTimers[index] = {
@@ -248,7 +251,7 @@ const PomodoroTimer = () => {
                   }
                   disabled={isRunning}
                 />
-                <span>min</span>
+                <span>min</span> 
               </div>
             </div>
             <div className={style.timeValue}>
