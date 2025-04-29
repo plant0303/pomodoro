@@ -2,16 +2,24 @@ import React, { useState } from "react";
 import global from "../global.scss"
 import style from "../css/Todo/Todo.module.scss";
 
+interface Todo {
+    id: number;
+    todo: String;
+}
+
 function TodoList() {
+    
     const [inputTodo, setInputTodo] = useState("");
     const [todoList, setTodoList] = useState([
         { id: 1, todo: "할일1" },
         { id: 2, todo: "할일2" },
         { id: 3, todo: "할일3" }
     ]);
+    const [openMenuId, setOpenMenuID] = useState(null); // 두투 메뉴 오픈 상태
+
 
     console.log(todoList);
-    const activeEnter = (e) => {
+    const activeEnter = (e: React.KeyboardEvent<HTMLInputElement>) => {
         if (e.key === "Enter" && inputTodo.trim() !== "") {
             const newTodoList = {
                 id: todoList.length + 1,
@@ -32,7 +40,7 @@ function TodoList() {
                 className={style.screenReader} />
                 <div className={style.labelBox}>
                     <span className={style.checkIcon} aria-hidden="true"></span>
-                    <label for={`todo-${todo.id}`}>{todo.todo}</label>
+                    <label htmlFor={`todo-${todo.id}`}>{todo.todo}</label>
                 </div>
                 <div className={style.menu}>
                     <span></span>
@@ -42,6 +50,7 @@ function TodoList() {
             </li>
         );
     });
+
     return (
         <>
             <h2 className={style.todoTitle}>Todo</h2>
@@ -59,9 +68,11 @@ function TodoList() {
                     {printTodo}
                 </ul>
             </div>
-            {/* 투두<br></br>
-            타이머 숫자 60 이상 안넘게<br></br>
+            {/*
             타이머 끝나면 알람 가도록<br></br>
+            투두 로컬스토리지에 저장하기
+            투두리스트 드래그로 위치 조절
+            투두리스트 삭제 수정
             뽀모도로 튜토리얼<br></br> */}
         </>
     );
