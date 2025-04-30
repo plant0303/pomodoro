@@ -1,3 +1,154 @@
-.timerCont{
-    
+@import "../../global.scss";
+
+
+.timerCont {
+  display: block;
+  position: relative;
+  width: 100%;
+  height: 60%;
+  .timerSVG {
+    position: absolute;
+    display: block;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    .line {
+      width: 10%;
+      height: 1px;
+      top: calc(50% - 1px / 2);
+      background: #da7f11;
+      position: absolute;
+    }
+
+    .timerBackground {
+      fill: none;
+      stroke: #ddd;
+      stroke-width: 10;
+    }
+
+    .timerStroke {
+      fill: none;
+      stroke: url(#grad);
+      stroke-width: 10;
+      // stroke-linecap: round;
+      transform: rotate(-90deg);
+      transform-origin: 60px 60px;
+    }
+
+    svg{
+      cursor: pointer;
+      width: auto;
+      height: min(60vh,  600px);
+      max-width: 500px;
+      max-height: 500px;
+    }
+}
+
+.time {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+
+  div {
+    padding: 5px;
+  }
+
+  p {
+    color: #888888;
+    font-size: 14px;
+  }
+
+  .timeValue {
+    label {
+      font-size: 18px;
+      color: #666;
+    }
+
+    div {
+      display: flex;
+      align-items: center;
+
+      input {
+        font-size: 24px;
+        text-align: center;
+      }
+    }
+  }
+
+  .settings {
+    display: flex;
+
+    input {
+      width: 30px;
+      border: none;
+      background-color: transparent;
+    }
+  }
+}
+}
+
+.btnCont {
+  text-align: center;
+
+  .controlButton {
+    width: 48%;
+    margin-left: 5px;
+  }
+
+  .startButton {
+    width: 60%;
+    background-color: $primary-color;
+
+    &:hover {
+      background-color: #ffcd35;
+    }
+  }
+
+}
+
+
+@media screen and (max-width: 900px) {
+  .cont {
+    display: block;
+  }
+
+  .timer {
+    width: 100%;
+    height: 50%;
+  }
+
+  .timerCont{
+    height: 80%;
+    margin-top: 0;
+    .timerSVG{
+      svg{
+        height: min(40vh,  400px);
+        max-width: 500px;
+        max-height: 500px;
+      }
+    }
+  }
+  .todo {
+    width: 100%;
+    height: 50%;
+  }
+
+  .btnCont {
+    flex-direction: column;
+    align-items: center;
+    padding: 0px min(14vw, 30%);
+    width: 100%;
+
+    .controlButton {
+      width: 48%;
+      margin-left: 5px;
+    }
+
+    .start {
+      width: 100%;
+      background-color: $primary-color;
+    }
+  }
 }
