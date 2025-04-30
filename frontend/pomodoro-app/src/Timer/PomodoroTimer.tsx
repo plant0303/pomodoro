@@ -1,9 +1,15 @@
 import React, { useState, useEffect, useMemo } from "react";
 import style from "../css/Timer/PomodoroTimer.module.scss";
 
+interface Timer {
+  type: string;
+  duration: number,
+  remaining: number
+}
+
 const PomodoroTimer = () => {
   // 타이머 순서와 설정
-  const [timers, setTimers] = useState([
+  const [timers, setTimers] = useState<Timer[]>([
     { type: "work", duration: 25 * 60, remaining: 25 * 60 }, // 공부 시간 (25분)
     { type: "break", duration: 5 * 60, remaining: 5 * 60 }, // 휴식 시간 (5분)
   ]);
@@ -82,7 +88,7 @@ const PomodoroTimer = () => {
   };
 
   // 시간 설정 변경
-  const updateTimerSettings = (index, newDuration) => {
+  const updateTimerSettings = (index: number, newDuration: number) => {
     if (isRunning) return;
 
     if(newDuration > 60){
@@ -100,8 +106,8 @@ const PomodoroTimer = () => {
   };
 
   // 각도 계산 함수
-  const calculateAngleAndTime = (e) => {
-    const rect = e.target.getBoundingClientRect();
+  const calculateAngleAndTime = (e: React.MouseEvent<SVGSVGElement>): { angle: number; minutes: number } => {
+    const rect = (e.target as SVGElement).getBoundingClientRect();
 
     const svgX = ((e.clientX - rect.left) / rect.width) * 120;
     const svgY = ((e.clientY - rect.top) / rect.height) * 120;
@@ -115,7 +121,7 @@ const PomodoroTimer = () => {
   };
 
   // 마우스 이벤트 핸들러 (원형 타이머 조정)
-  const handleMouseDown = (e) => {
+  const handleMouseDown = (e: React.MouseEvent<SVGSVGElement>) => {
     if (isRunning) return;
     setIsDragging(true);
     const { minutes } = calculateAngleAndTime(e);
@@ -132,7 +138,7 @@ const PomodoroTimer = () => {
     });
   };
 
-  const handleMouseMove = (e) => {
+  const handleMouseMove = (e: React.MouseEvent<SVGSVGElement>) => {
     if (!isDragging || isRunning) return;
     // 각도 계산 및 시간 설정 로직 구현
     const { minutes } = calculateAngleAndTime(e);
