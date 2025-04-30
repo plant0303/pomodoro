@@ -16,7 +16,7 @@ function TodoList() {
         { id: 3, todo: "할일3" }
     ]);
     const [openMenuId, setOpenMenuId] = useState<number | null>(null); // 두투 메뉴 오픈 상태
-    const menuRef = useRef<HTMLDivElement>(null);
+    const menuRef = useRef<{ [key: number]: HTMLDivElement | null }>({}); // 클릭 감지
 
     //투두 입력받기
     const activeEnter = (e: React.KeyboardEvent<HTMLInputElement>) => {
@@ -39,7 +39,7 @@ function TodoList() {
     
     useEffect(() => {
         const handleClickOutside = (e: MouseEvent) => {
-            if(openMenuId !== null && menuRef.current && !menuRef.current.contains(e.target as Node)){
+            if(openMenuId !== null && menuRef.current && !menuRef.current[openMenuId]?.contains(e.target as Node)){
                 setOpenMenuId(null);
             }
         };
@@ -52,9 +52,9 @@ function TodoList() {
         return () => {
             document.removeEventListener("mousedown", handleClickOutside);
           };
-    }, [openMenuId]);
     // 의존성배열 []
     // openMenuId가 변경될때마다 실행되도록 제어
+    }, [openMenuId]);
 
     // 투두 리스트 출력하기
     const printTodo = todoList.map((todo) => {
@@ -67,8 +67,14 @@ function TodoList() {
                     <span className={style.checkIcon} aria-hidden="true"></span>
                     <label htmlFor={`todo-${todo.id}`}>{todo.todo}</label>
                 </div>
+                <div
+                    ref={(el) => { menuRef.current[todo.id] = el; }}
+                    className={style.menuWrapper}
+                >
                 <div className={style.menu}
-                    onClick={() => toggleMunu(todo.id)}
+                    onClick={(e) => {
+                        e.stopPropagation();
+                        toggleMunu(todo.id);}}
                     tabIndex={0}
                     role="button">
                     <span></span>
@@ -76,13 +82,14 @@ function TodoList() {
                     <span></span>
                 </div>
                 {openMenuId === todo.id &&
-                    <div className={style.menuPopup} ref={menuRef}>
+                    <div className={style.menuPopup}>
                         <ul>
                             <li><button>수정</button></li>
                             <li><button>삭제</button></li>
                         </ul>
                     </div>
                 }
+                </div>
             </li>
         );
     });
