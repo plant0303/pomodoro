@@ -29,7 +29,7 @@ const PomodoroTimer = () => {
     circumference - (currentTimer.remaining / 3600) * circumference;
 
   // 타이머 실행 효과
-  useEffect(() => {
+  useEffect(() => {    
     if (!isRunning) return;
 
     const interval = setInterval(() => {
@@ -42,6 +42,7 @@ const PomodoroTimer = () => {
         }
         // 현재 타이머 종료 시 다음 타이머로 이동
         else {
+          new Notification("타이머 종료");
           clearInterval(interval);
           setIsRunning(false);
           const nextIndex = (currentTimerIndex + 1) % prevTimers.length;
@@ -61,8 +62,14 @@ const PomodoroTimer = () => {
   // 타이머 시작/일시정지
   const toggleTimer = () => {
     setIsRunning(!isRunning);
-  };
-
+    
+    // 알람 설정이 안되어있을 경우
+    if (Notification.permission === "denied") {
+      alert(
+        "알림이 차단되어 있습니다. 알림을 받으려면 브라우저 설정에서 수동으로 허용해 주세요."
+      );
+    } 
+  }
   // 타이머 리셋
   const resetTimer = () => {
     setIsRunning(false);
