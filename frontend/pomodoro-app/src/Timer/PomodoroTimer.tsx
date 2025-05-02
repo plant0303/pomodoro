@@ -42,7 +42,7 @@ const PomodoroTimer = () => {
         }
         // 현재 타이머 종료 시 다음 타이머로 이동
         else {
-          new Notification("타이머 종료");
+          new Notification(`${currentTimer.type === "work" ? "공부" : "휴식" } 시간이 종료되었습니다.`);
           clearInterval(interval);
           setIsRunning(false);
           const nextIndex = (currentTimerIndex + 1) % prevTimers.length;
