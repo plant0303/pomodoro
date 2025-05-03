@@ -1,10 +1,26 @@
+import React, { useState } from "react";
 import logo from "./logo.svg";
 import "./default.css";
 import "./main.css";
 import PomodoroTimer from "./Timer/PomodoroTimer";
 import PomodoroTimerTest from './Timer/PomodoroTimerTest';
 import TodoList from "./Todo/TodoList";
+import DeleteModal from "./Todo/DeleteModal";
+
 function App() {
+  const [showDeleteModal, setShowDeleteModal] = useState(false);
+
+  const handleDeleteRequest = () => {
+    setShowDeleteModal(true);
+  }
+
+  const handleConfirmDelete =() => {
+    setShowDeleteModal(false);
+  }
+
+  const handleCancelDelete = () => {
+    setShowDeleteModal(false);
+  }
   return (
     <div className="body">
       <header className="header">
@@ -15,15 +31,19 @@ function App() {
           <span></span>
         </div>
       </header>
+
       <div className="cont">
         <div className="timer">
-          {/* <PomodoroTimerTest></PomodoroTimerTest> */}
           <PomodoroTimer></PomodoroTimer>
         </div>
         <div className="todo">
-          <TodoList></TodoList>
+          <TodoList onDeleteClick={handleDeleteRequest}></TodoList>
         </div>
       </div>
+
+      {showDeleteModal == true && 
+      <DeleteModal onConfirm={handleConfirmDelete} onCancel={handleCancelDelete}></DeleteModal>}
+
     </div>
   );
 }

@@ -5,9 +5,10 @@ import style from "../css/Todo/Todo.module.scss";
 interface Todo {
     id: number;
     todo: String;
+    onDeleteClick: (id: number) => void; //number을 받아서 아무것도 반환하지 않는 함수
 }
 
-function TodoList() {
+function TodoList({ onDeleteClick }: Todo) {
 
     const [inputTodo, setInputTodo] = useState("");
     const [todoList, setTodoList] = useState([
@@ -36,10 +37,9 @@ function TodoList() {
         setOpenMenuId((prevId) => (prevId === id ? null : id));
     }
 
-    
     useEffect(() => {
         const handleClickOutside = (e: MouseEvent) => {
-            if(openMenuId !== null && menuRef.current && !menuRef.current[openMenuId]?.contains(e.target as Node)){
+            if (openMenuId !== null && menuRef.current && !menuRef.current[openMenuId]?.contains(e.target as Node)) {
                 setOpenMenuId(null);
             }
         };
@@ -51,9 +51,9 @@ function TodoList() {
         // 컴포넌트가 언마운트 되거나 의존성 배열 값이 변경될 때 실행됨
         return () => {
             document.removeEventListener("mousedown", handleClickOutside);
-          };
-    // 의존성배열 []
-    // openMenuId가 변경될때마다 실행되도록 제어
+        };
+        // 의존성배열 []
+        // openMenuId가 변경될때마다 실행되도록 제어
     }, [openMenuId]);
 
     // 투두 리스트 출력하기
@@ -71,24 +71,25 @@ function TodoList() {
                     ref={(el) => { menuRef.current[todo.id] = el; }}
                     className={style.menuWrapper}
                 >
-                <div className={style.menu}
-                    onClick={(e) => {
-                        e.stopPropagation();
-                        toggleMunu(todo.id);}}
-                    tabIndex={0}
-                    role="button">
-                    <span></span>
-                    <span></span>
-                    <span></span>
-                </div>
-                {openMenuId === todo.id &&
-                    <div className={style.menuPopup}>
-                        <ul>
-                            <li><button>수정</button></li>
-                            <li><button>삭제</button></li>
-                        </ul>
+                    <div className={style.menu}
+                        onClick={(e) => {
+                            e.stopPropagation();
+                            toggleMunu(todo.id);
+                        }}
+                        tabIndex={0}
+                        role="button">
+                        <span></span>
+                        <span></span>
+                        <span></span>
                     </div>
-                }
+                    {openMenuId === todo.id &&
+                        <div className={style.menuPopup}>
+                            <ul>
+                                <li><button>수정</button></li>
+                                <li><button onClick={() => onDeleteClick(todo.id)}>삭제</button></li>
+                            </ul>
+                        </div>
+                    }
                 </div>
             </li>
         );
@@ -112,8 +113,7 @@ function TodoList() {
                 </ul>
             </div>
             {/*
-            커밋 테스트
-            타이머 끝나면 알람 가도록<br></br>
+            타이틀에 초 띄우기
             투두 로컬스토리지에 저장하기
             투두리스트 드래그로 위치 조절
             투두리스트 삭제 수정
