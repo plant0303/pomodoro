@@ -1,15 +1,15 @@
 import React, { useState } from "react";
-import logo from "./logo.svg";
 import "./default.css";
 import "./main.css";
 import PomodoroTimer from "./Timer/PomodoroTimer";
-import PomodoroTimerTest from './Timer/PomodoroTimerTest';
 import TodoList from "./Todo/TodoList";
 import DeleteModal from "./Todo/DeleteModal";
 
 function App() {
   const [showDeleteModal, setShowDeleteModal] = useState(false);
+  const [selectedTodoId, setSelectedTodoId] = useState(null)
 
+  console.log(showDeleteModal);
   const handleDeleteRequest = () => {
     setShowDeleteModal(true);
   }
@@ -20,6 +20,13 @@ function App() {
 
   const handleCancelDelete = () => {
     setShowDeleteModal(false);
+  }
+
+  // todo 삭제
+  const confirmDelete = () => {
+    if(selectedTodoId !== null){
+
+    }
   }
   return (
     <div className="body">

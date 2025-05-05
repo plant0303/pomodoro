@@ -5,10 +5,13 @@ import style from "../css/Todo/Todo.module.scss";
 interface Todo {
     id: number;
     todo: String;
-    onDeleteClick: (id: number) => void; //number을 받아서 아무것도 반환하지 않는 함수
 }
 
-function TodoList({ onDeleteClick }: Todo) {
+interface TodoListProps {
+    onDeleteClick: (id: number) => void;
+}
+
+function TodoList({ onDeleteClick }: TodoListProps) {
 
     const [inputTodo, setInputTodo] = useState("");
     const [todoList, setTodoList] = useState([
