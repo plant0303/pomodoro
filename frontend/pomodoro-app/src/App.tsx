@@ -7,13 +7,15 @@ import DeleteModal from "./Todo/DeleteModal";
 
 function App() {
   const [showDeleteModal, setShowDeleteModal] = useState(false);
-  const [selectedTodoId, setSelectedTodoId] = useState(null)
+  const [selectedTodoId, setSelectedTodoId] = useState<number | null>(null);
 
-  console.log(showDeleteModal);
-  const handleDeleteRequest = () => {
+  
+  const handleDeleteRequest = (id: number) => {
     setShowDeleteModal(true);
+    setSelectedTodoId(id);
   }
 
+  // 삭제 모달
   const handleConfirmDelete =() => {
     setShowDeleteModal(false);
   }
@@ -28,6 +30,8 @@ function App() {
 
     }
   }
+
+  console.log(selectedTodoId);
   return (
     <div className="body">
       <header className="header">
