@@ -5,10 +5,19 @@ import PomodoroTimer from "./Timer/PomodoroTimer";
 import TodoList from "./Todo/TodoList";
 import DeleteModal from "./Todo/DeleteModal";
 
+interface Todo {
+  id: number;
+  todo: String;
+}
+
 function App() {
   const [showDeleteModal, setShowDeleteModal] = useState(false);
+  const [todoList, setTodoList] = useState([
+      { id: 1, todo: "할일1" },
+      { id: 2, todo: "할일2" },
+      { id: 3, todo: "할일3" }
+  ]);
   const [selectedTodoId, setSelectedTodoId] = useState<number | null>(null);
-
   
   const handleDeleteRequest = (id: number) => {
     setShowDeleteModal(true);
@@ -17,6 +26,10 @@ function App() {
 
   // 삭제 모달
   const handleConfirmDelete =() => {
+    if (selectedTodoId !== null) {
+      setTodoList(todoList.filter((todo) => todo.id !== selectedTodoId));
+      setSelectedTodoId(null);
+    }
     setShowDeleteModal(false);
   }
 
@@ -31,7 +44,6 @@ function App() {
     }
   }
 
-  console.log(selectedTodoId);
   return (
     <div className="body">
       <header className="header">
@@ -48,13 +60,12 @@ function App() {
           <PomodoroTimer></PomodoroTimer>
         </div>
         <div className="todo">
-          <TodoList onDeleteClick={handleDeleteRequest}></TodoList>
+          <TodoList todoList={todoList} setTodoList={setTodoList} onDeleteClick={handleDeleteRequest}></TodoList>
         </div>
       </div>
 
       {showDeleteModal == true && 
       <DeleteModal onConfirm={handleConfirmDelete} onCancel={handleCancelDelete}></DeleteModal>}
-
     </div>
   );
 }

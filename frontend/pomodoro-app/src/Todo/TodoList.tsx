@@ -4,21 +4,20 @@ import style from "../css/Todo/Todo.module.scss";
 
 interface Todo {
     id: number;
-    todo: String;
+    todo: string;
 }
 
 interface TodoListProps {
+    todoList: Todo[];
+    setTodoList: React.Dispatch<React.SetStateAction<Todo[]>>;
     onDeleteClick: (id: number) => void;
 }
 
-function TodoList({ onDeleteClick }: TodoListProps) {
+function TodoList({ todoList, setTodoList, onDeleteClick }: TodoListProps) {
 
     const [inputTodo, setInputTodo] = useState("");
-    const [todoList, setTodoList] = useState([
-        { id: 1, todo: "할일1" },
-        { id: 2, todo: "할일2" },
-        { id: 3, todo: "할일3" }
-    ]);
+
+
     const [openMenuId, setOpenMenuId] = useState<number | null>(null); // 두투 메뉴 오픈 상태
     const menuRef = useRef<{ [key: number]: HTMLDivElement | null }>({}); // 클릭 감지
 
