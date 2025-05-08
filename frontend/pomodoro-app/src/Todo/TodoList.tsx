@@ -88,7 +88,7 @@ function TodoList({ todoList, setTodoList, onDeleteClick }: TodoListProps) {
                         <div className={style.menuPopup}>
                             <ul>
                                 <li><button>수정</button></li>
-                                <li><button onClick={() => onDeleteClick(todo.id)}>삭제</button></li>
+                                <li><button onClick={() =>{onDeleteClick(todo.id); setOpenMenuId(null);}}>삭제</button></li>
                             </ul>
                         </div>
                     }
