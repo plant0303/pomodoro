@@ -7,15 +7,16 @@ import DeleteModal from "./Todo/DeleteModal";
 
 interface Todo {
   id: number;
-  todo: String;
+  todo: string;
+  completed: boolean;
 }
 
 function App() {
-  const [showDeleteModal, setShowDeleteModal] = useState(false);
-  const [todoList, setTodoList] = useState([
-      { id: 1, todo: "할일1" },
-      { id: 2, todo: "할일2" },
-      { id: 3, todo: "할일3" }
+  const [showDeleteModal, setShowDeleteModal] = useState<boolean>(false);
+  const [todoList, setTodoList] = useState<Todo[]>([
+      { id: 1, todo: "할일1", completed: false },
+      { id: 2, todo: "할일2", completed: false },
+      { id: 3, todo: "할일3", completed: false }
   ]);
   const [selectedTodoId, setSelectedTodoId] = useState<number | null>(null);
   

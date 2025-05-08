@@ -5,6 +5,7 @@ import style from "../css/Todo/Todo.module.scss";
 interface Todo {
     id: number;
     todo: string;
+    completed: boolean;
 }
 
 interface TodoListProps {
@@ -17,16 +18,19 @@ function TodoList({ todoList, setTodoList, onDeleteClick }: TodoListProps) {
 
     const [inputTodo, setInputTodo] = useState("");
 
-
     const [openMenuId, setOpenMenuId] = useState<number | null>(null); // 두투 메뉴 오픈 상태
     const menuRef = useRef<{ [key: number]: HTMLDivElement | null }>({}); // 클릭 감지
+    
+    const [updateTodoId, setUpdateTodoId] = useState<number | null>(null);
+    const [updateTodo, setUpdateTodo] = useState<string>(""); // 투두 수정
 
     //투두 입력받기
     const activeEnter = (e: React.KeyboardEvent<HTMLInputElement>) => {
         if (e.key === "Enter" && inputTodo.trim() !== "") {
             const newTodoList = {
                 id: todoList.length + 1,
-                todo: inputTodo.trim()
+                todo: inputTodo.trim(),
+                completed: false
             };
 
             setTodoList([...todoList, newTodoList]);
@@ -58,6 +62,32 @@ function TodoList({ todoList, setTodoList, onDeleteClick }: TodoListProps) {
         // openMenuId가 변경될때마다 실행되도록 제어
     }, [openMenuId]);
 
+
+    // todo 수정
+    const onUpdateClick = (id: number) => {
+        setUpdateTodoId(id);
+
+    }
+
+    const handleUpdateTodo = (e: React.KeyboardEvent<HTMLInputElement>, todoId: number) => {
+        console.log(todoId);
+        if(e.key === "Enter") {
+            const trimmed = updateTodo.trim();
+            // 공백만 있을 경우
+            if(trimmed === ""){
+                return;
+            }
+
+            // 수정 로직
+            const updateList = todoList.map((todo) => 
+                todo.id === todoId ? { ...todo, todo:trimmed } : todo
+            );
+
+            setTodoList(updateList);
+            setUpdateTodoId(null);
+        }
+    }
+
     // 투두 리스트 출력하기
     const printTodo = todoList.map((todo) => {
         return (
@@ -65,10 +95,19 @@ function TodoList({ todoList, setTodoList, onDeleteClick }: TodoListProps) {
                 <input type="checkbox"
                     id={`todo-${todo.id}`}
                     className={style.screenReader} />
-                <div className={style.labelBox}>
-                    <span className={style.checkIcon} aria-hidden="true"></span>
-                    <label htmlFor={`todo-${todo.id}`}>{todo.todo}</label>
-                </div>
+                {updateTodoId === todo.id ?
+                    <div className={style.labelBox}>
+                        <span className={style.checkIcon} aria-hidden="true"></span>
+                        <input type="text" 
+                        onChange={(e) => setUpdateTodo(e.target.value)} 
+                        value={updateTodo}
+                        onKeyDown={(e) => handleUpdateTodo(e, todo.id)}></input>
+                    </div>    :
+                    <div className={style.labelBox}>
+                        <span className={style.checkIcon} aria-hidden="true"></span>
+                        <label htmlFor={`todo-${todo.id}`}>{todo.todo}</label>
+                    </div>              
+                }
                 <div
                     ref={(el) => { menuRef.current[todo.id] = el; }}
                     className={style.menuWrapper}
@@ -87,8 +126,8 @@ function TodoList({ todoList, setTodoList, onDeleteClick }: TodoListProps) {
                     {openMenuId === todo.id &&
                         <div className={style.menuPopup}>
                             <ul>
-                                <li><button>수정</button></li>
-                                <li><button onClick={() =>{onDeleteClick(todo.id); setOpenMenuId(null);}}>삭제</button></li>
+                                <li><button onClick={() => { onUpdateClick(todo.id); setOpenMenuId(null) }}>수정</button></li>
+                                <li><button onClick={() => { onDeleteClick(todo.id); setOpenMenuId(null); }}>삭제</button></li>
                             </ul>
                         </div>
                     }
@@ -96,6 +135,8 @@ function TodoList({ todoList, setTodoList, onDeleteClick }: TodoListProps) {
             </li>
         );
     });
+
+
 
     return (
         <>
@@ -115,6 +156,7 @@ function TodoList({ todoList, setTodoList, onDeleteClick }: TodoListProps) {
                 </ul>
             </div>
             {/*
+            키보드 단축키 편의성 - esc키 눌러서 모달 끄기
             타이틀에 초 띄우기
             투두 로컬스토리지에 저장하기
             투두리스트 드래그로 위치 조절
