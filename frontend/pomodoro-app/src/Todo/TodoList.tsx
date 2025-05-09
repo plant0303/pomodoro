@@ -2,6 +2,8 @@ import React, { useEffect, useRef, useState } from "react";
 import global from "../global.scss"
 import style from "../css/Todo/Todo.module.scss";
 
+import TodoInput from './TodoInout';
+
 interface Todo {
     id: number;
     todo: string;
@@ -141,15 +143,7 @@ function TodoList({ todoList, setTodoList, onDeleteClick }: TodoListProps) {
     return (
         <>
             <h2 className={style.todoTitle}>Todo</h2>
-            <div className={style.todoCont}>
-                <input type="text"
-                    value={inputTodo}
-                    onChange={(e) => setInputTodo(e.target.value)}
-                    onKeyDown={(e) => activeEnter(e)}
-                    className={style.inputTodo}
-                    placeholder="할 일을 기록하세요"></input>
-                <div className={style.todoList}></div>
-            </div>
+            <TodoInput todoList={todoList} setTodoList={setTodoList}></TodoInput>
             <div className={style.todoList}>
                 <ul>
                     {printTodo}
@@ -160,7 +154,7 @@ function TodoList({ todoList, setTodoList, onDeleteClick }: TodoListProps) {
             타이틀에 초 띄우기
             투두 로컬스토리지에 저장하기
             투두리스트 드래그로 위치 조절
-            투두리스트 삭제 수정
+            삭제 누르면 completed 변경시키기
             뽀모도로 튜토리얼<br></br> */}
         </>
     );
