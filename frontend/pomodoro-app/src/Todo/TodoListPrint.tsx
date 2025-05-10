@@ -6,35 +6,27 @@ import { Todo, TodoListProps } from '../types/todo';
 
 
 function TodoListPrint({ todoList, setTodoList, onDeleteClick }: TodoListProps) {
-    const [updateTodoId, setUpdateTodoId] = useState<number | null>(null);
-    const [updateTodo, setUpdateTodo] = useState<string>(""); // 투두 수정
+
     const menuRef = useRef<{ [key: number]: HTMLDivElement | null }>({}); // 클릭 감지
     const [openMenuId, setOpenMenuId] = useState<number | null>(null); // 두투 메뉴 오픈 상태
 
-    // todo 수정
-    const onUpdateClick = (id: number) => {
-        setUpdateTodoId(id);
+    // const handleUpdateTodo = (e: React.KeyboardEvent<HTMLInputElement>, todoId: number) => {
+    //     if (e.key === "Enter") {
+    //         const trimmed = updateTodo.trim();
+    //         // 공백만 있을 경우
+    //         if (trimmed === "") {
+    //             return;
+    //         }
 
-    }
+    //         // 수정 로직
+    //         const updateList = todoList.map((todo) =>
+    //             todo.id === todoId ? { ...todo, todo: trimmed } : todo
+    //         );
 
-    const handleUpdateTodo = (e: React.KeyboardEvent<HTMLInputElement>, todoId: number) => {
-        console.log(todoId);
-        if (e.key === "Enter") {
-            const trimmed = updateTodo.trim();
-            // 공백만 있을 경우
-            if (trimmed === "") {
-                return;
-            }
-
-            // 수정 로직
-            const updateList = todoList.map((todo) =>
-                todo.id === todoId ? { ...todo, todo: trimmed } : todo
-            );
-
-            setTodoList(updateList);
-            setUpdateTodoId(null);
-        }
-    }
+    //         setTodoList(updateList);
+    //         setUpdateTodoId(null);
+    //     }
+    // }
 
     // 투두 리스트 햄버거 메뉴 출력
     const toggleMenu = (id: number) => {
@@ -66,20 +58,10 @@ function TodoListPrint({ todoList, setTodoList, onDeleteClick }: TodoListProps) 
             <ul>
                 {todoList.map((todo) => (
                     <TodoItem
+                        key={todo.id}
                         todo={todo}
-                        menu={{
-                            ref: menuRef,
-                            isOpen: openMenuId === todo.id,
-                            toggle: toggleMenu
-                        }}
-                        edit={{
-                            isEditing: updateTodoId === todo.id,
-                            text: updateTodo,
-                            onChange: setUpdateTodo,
-                            onKeyDown: handleUpdateTodo,
-                            onStartEdit: onUpdateClick
-                        }}
                         onDelete={onDeleteClick}
+                        // onUpdate={handleUpdateTodo}
                     />
                 ))}
             </ul>
