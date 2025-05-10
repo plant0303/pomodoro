@@ -10,23 +10,15 @@ function TodoListPrint({ todoList, setTodoList, onDeleteClick }: TodoListProps) 
     const menuRef = useRef<{ [key: number]: HTMLDivElement | null }>({}); // 클릭 감지
     const [openMenuId, setOpenMenuId] = useState<number | null>(null); // 두투 메뉴 오픈 상태
 
-    // const handleUpdateTodo = (e: React.KeyboardEvent<HTMLInputElement>, todoId: number) => {
-    //     if (e.key === "Enter") {
-    //         const trimmed = updateTodo.trim();
-    //         // 공백만 있을 경우
-    //         if (trimmed === "") {
-    //             return;
-    //         }
+    const handleUpdateTodo = (todoId: number, trimmed: string) => {
+        // 수정 로직
+        const updateList = todoList.map((todo) =>
+            todo.id === todoId ? { ...todo, todo: trimmed } : todo
+        );
 
-    //         // 수정 로직
-    //         const updateList = todoList.map((todo) =>
-    //             todo.id === todoId ? { ...todo, todo: trimmed } : todo
-    //         );
+        setTodoList(updateList);
 
-    //         setTodoList(updateList);
-    //         setUpdateTodoId(null);
-    //     }
-    // }
+    }
 
     // 투두 리스트 햄버거 메뉴 출력
     const toggleMenu = (id: number) => {
@@ -61,7 +53,7 @@ function TodoListPrint({ todoList, setTodoList, onDeleteClick }: TodoListProps) 
                         key={todo.id}
                         todo={todo}
                         onDelete={onDeleteClick}
-                        // onUpdate={handleUpdateTodo}
+                        onUpdate={handleUpdateTodo}
                     />
                 ))}
             </ul>

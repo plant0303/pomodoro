@@ -1,15 +1,15 @@
 import React, { useState } from 'react';
 import style from '../css/Todo/Todo.module.scss';
 import { Todo, TodoListProps } from '../types/todo';
-// import TodoMenu from './TodoMenu';
+import TodoMenu from './TodoMenu';
 
 interface TodoItemProps {
     todo: Todo;
     onDelete: (id: number) => void;
-    // onUpdate: (id: number, text: string) => void;
+    onUpdate: (id: number, trimmed: string) => void;
 }
 
-function TodoItem({ todo, onDelete }: TodoItemProps) {
+function TodoItem({ todo, onDelete, onUpdate }: TodoItemProps) {
     const [updateTodoId, setUpdateTodoId] = useState<number | null>(null);
     const [updateTodo, setUpdateTodo] = useState<string>(""); // 투두 수정
     const [isEditing, setIsEditing] = useState(false);
@@ -27,8 +27,9 @@ function TodoItem({ todo, onDelete }: TodoItemProps) {
                 return;
             }
 
-            // onUpdate(todo.id, trimmed);
+            onUpdate(todo.id, trimmed);
             setUpdateTodoId(null);
+            setIsEditing(false);
         }
     }
 
@@ -51,7 +52,7 @@ function TodoItem({ todo, onDelete }: TodoItemProps) {
                     <label htmlFor={`todo-${todo.id}`}>{todo.todo}</label>
                 </div>
             }
-            {/* <TodoMenu /> */}
+            <TodoMenu todoId={todo.id} setIsEditing={setIsEditing} onDelete={onDelete}/>
 
         </li>
     );
