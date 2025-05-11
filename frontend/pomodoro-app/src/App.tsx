@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "./default.css";
 import "./main.css";
 import PomodoroTimer from "./Timer/PomodoroTimer";
@@ -17,7 +17,21 @@ function App() {
     const data = localStorage.getItem('todo');
     return data ? JSON.parse(data) : [];
   });
-  
+
+  useEffect(() => {
+    const hasVisited = localStorage.getItem("hasVisited");
+
+    if(!hasVisited){
+      const defaultTodos: Todo[] = [
+        { id: 1, todo: "이번 세션동안 진행할 일을 기록해보세요.", completed: false }
+      ];
+
+      localStorage.setItem("todo", JSON.stringify(defaultTodos));
+      localStorage.setItem("hasVisited", "true");
+      setTodoList(defaultTodos);
+    }
+  }, []);
+
   const [selectedTodoId, setSelectedTodoId] = useState<number | null>(null);
   
   const handleDeleteRequest = (id: number) => {
