@@ -12,7 +12,8 @@ interface TodoListProps {
     setTodoList: React.Dispatch<React.SetStateAction<Todo[]>>;
 }
 
-function TodoInput({ todoList, setTodoList }: TodoListProps) {
+function 
+TodoInput({ todoList, setTodoList }: TodoListProps) {
     const [inputTodo, setInputTodo] = useState<string>("");
 
     // 로컬스토리지 저장

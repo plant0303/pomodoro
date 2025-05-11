@@ -13,7 +13,7 @@ function DeleteModal({ onConfirm, onCancel }: DeleteModalProps) {
         <p>정말 삭제하시겠습니까</p>
         <div className={style.popupBtn}>
           <button onClick={onConfirm}>삭제</button>
-          <button>취소</button>
+          <button onClick={onCancel}>취소</button>
         </div>
       </div>
     </div>
