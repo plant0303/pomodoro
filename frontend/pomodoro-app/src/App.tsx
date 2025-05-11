@@ -13,17 +13,18 @@ interface Todo {
 
 function App() {
   const [showDeleteModal, setShowDeleteModal] = useState<boolean>(false);
-  const [todoList, setTodoList] = useState<Todo[]>([
-      { id: 1, todo: "할일1", completed: false },
-      { id: 2, todo: "할일2", completed: false },
-      { id: 3, todo: "할일3", completed: false }
-  ]);
+  const [todoList, setTodoList] = useState<Todo[]>(() => {
+    const data = localStorage.getItem('todo');
+    return data ? JSON.parse(data) : [];
+  });
+  
   const [selectedTodoId, setSelectedTodoId] = useState<number | null>(null);
   
   const handleDeleteRequest = (id: number) => {
     setShowDeleteModal(true);
     setSelectedTodoId(id);
   }
+
 
   // 삭제 모달
   const handleConfirmDelete =() => {
@@ -61,7 +62,11 @@ function App() {
           <PomodoroTimer></PomodoroTimer>
         </div>
         <div className="todo">
-          <TodoList todoList={todoList} setTodoList={setTodoList} onDeleteClick={handleDeleteRequest}></TodoList>
+          <TodoList 
+            todoList={todoList} 
+            setTodoList={setTodoList} 
+            onDeleteClick={handleDeleteRequest} 
+            />
         </div>
       </div>
 
