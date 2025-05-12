@@ -51,6 +51,12 @@
   transform: translate(-50%, -50%);
   text-align: center;
 
+  .timeDisplay{
+    .currentTime{
+      font-size: 24px;
+      font-weight: bold;
+    }
+  }
   div {
     padding: 5px;
   }
@@ -90,11 +96,14 @@
 }
 
 .btnCont {
-  text-align: center;
+display: flex
+;
+    align-items: center;
+    flex-direction: column;
 
   .controlButton {
-    width: 48%;
-    margin-left: 5px;
+    width: 50%;
+    margin-bottom: 10px;
   }
 
   .startButton {

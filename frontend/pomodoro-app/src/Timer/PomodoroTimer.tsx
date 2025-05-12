@@ -239,7 +239,7 @@ const PomodoroTimer = () => {
         </div>
         <div className={style.time}>
           <div className={style.timeDisplay}>
-            <div>
+            <div className={style.currentTime}>
               {Math.floor(currentTimer.remaining / 60)
                 .toString()
                 .padStart(2, "0")}
