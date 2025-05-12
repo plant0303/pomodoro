@@ -59,14 +59,16 @@ body {
 @media screen and (max-width: 900px) {
   .cont {
     display: block;
+    margin: 50px auto;
   }
   .timer {
     display: block;
     width: 100%;
-    height: 60%;
+    height: 50%;
   }
   .todo {
     width: 100%;
     height: 50%;
+    margin-top: 0px;
   }
 }

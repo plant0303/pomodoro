@@ -65,7 +65,7 @@ function TodoMenu({ todoId, setIsEditing, onDelete }: TodoMenu) {
         <MenuIcon></MenuIcon>
       </div>
       {openMenuId === todoId &&
-        <div className={style.menuPopup}>
+        <div className={style.menuPopup} >
           <ul>
             <li><button onClick={() => { setIsEditing(true); toggleMenu(todoId) }}>수정</button></li>
             <li><button onClick={() => { onDelete(todoId); toggleMenu(todoId); }}>삭제</button></li>

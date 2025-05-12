@@ -63,7 +63,7 @@ function App() {
   return (
     <div className="body">
       <header className="header">
-        <h1>Pomodoro</h1>
+        <h1>TodoMoro</h1>
         <div className="more">
           <span></span>
           <span></span>

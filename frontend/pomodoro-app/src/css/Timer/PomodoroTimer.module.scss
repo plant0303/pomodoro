@@ -6,12 +6,14 @@
   position: relative;
   width: 100%;
   height: 60%;
+
   .timerSVG {
     position: absolute;
     display: block;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
+
     .line {
       width: 10%;
       height: 1px;
@@ -35,71 +37,71 @@
       transform-origin: 60px 60px;
     }
 
-    svg{
+    svg {
       cursor: pointer;
       width: auto;
-      height: min(60vh,  600px);
+      height: min(60vh, 600px);
       max-width: 500px;
       max-height: 500px;
     }
-}
-
-.time {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  text-align: center;
-
-  .timeDisplay{
-    .currentTime{
-      font-size: 24px;
-      font-weight: bold;
-    }
-  }
-  div {
-    padding: 5px;
   }
 
-  p {
-    color: #888888;
-    font-size: 14px;
-  }
+  .time {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
 
-  .timeValue {
-    label {
-      font-size: 18px;
-      color: #666;
+    .timeDisplay {
+      .currentTime {
+        font-size: 24px;
+        font-weight: bold;
+      }
     }
 
     div {
+      padding: 5px;
+    }
+
+    p {
+      color: #888888;
+      font-size: 14px;
+    }
+
+    .timeValue {
+      label {
+        font-size: 18px;
+        color: #666;
+      }
+
+      div {
+        display: flex;
+        align-items: center;
+
+        input {
+          font-size: 24px;
+          text-align: center;
+        }
+      }
+    }
+
+    .settings {
       display: flex;
-      align-items: center;
 
       input {
-        font-size: 24px;
-        text-align: center;
+        width: 30px;
+        border: none;
+        background-color: transparent;
       }
     }
   }
-
-  .settings {
-    display: flex;
-
-    input {
-      width: 30px;
-      border: none;
-      background-color: transparent;
-    }
-  }
-}
 }
 
 .btnCont {
-display: flex
-;
-    align-items: center;
-    flex-direction: column;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
 
   .controlButton {
     width: 50%;
@@ -128,25 +130,28 @@ display: flex
     height: 50%;
   }
 
-  .timerCont{
+  .timerCont {
     height: 80%;
     margin-top: 0;
-    .timerSVG{
-      svg{
-        height: min(40vh,  400px);
+
+    .timerSVG {
+      svg {
+        height: min(40vh, 400px);
         max-width: 500px;
         max-height: 500px;
       }
     }
   }
+
   .todo {
     width: 100%;
     height: 50%;
   }
 
   .btnCont {
-    flex-direction: column;
-    align-items: center;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
     padding: 0px min(14vw, 30%);
     width: 100%;
 

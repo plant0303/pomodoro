@@ -1,17 +1,18 @@
 @import "../../global.scss";
 
-.todoTitle{
+.todoTitle {
   font-size: 24px;
   font-weight: bold;
 }
 
-.todoCont{
+.todoCont {
   margin-top: 50px;
   width: 80%;
-  .inputTodo{
+
+  .inputTodo {
     border: none;
     padding-bottom: 5px;
-    border-bottom: 1px solid #aaa ;
+    border-bottom: 1px solid #aaa;
     background: none;
     width: 100%;
     font-size: 18px;
@@ -20,17 +21,55 @@
 }
 
 .todoList {
+  height: 50%;
   width: 80%;
   margin-top: 10px;
-  .todoLi{
+  overflow-y: scroll;
+  overflow-anchor: none;
+  contain: layout;
+
+
+  .todoLi {
     position: relative;
     padding: 10px 5px;
     transition: 0.2s;
     border-radius: 3px;
+
+    .menuWrapper {
+
+      .menuPopup {
+         top: 100%; // 아래로 펼쳐지게
+        position: absolute;
+        right: 0;
+        z-index: 10;
+        width: 100px;
+        background: #fff;
+        border: 1px solid #f3f3f3;
+          max-height: 200px;        // 메뉴 최대 높이 제한 (원하는 대로 조절)
+  overflow-y: auto;         // 메뉴 내부 스크롤 허용
+  box-sizing: border-box;
+
+        li {
+          width: 100%;
+        }
+
+        button {
+          width: 100%;
+          border-radius: 0;
+          background-color: #fff;
+        }
+
+        button:hover {
+          background-color: #ebebeb;
+        }
+      }
+    }
   }
-  .todoLi:hover{
+
+  .todoLi:hover {
     background-color: #ebebeb;
   }
+
   .screenReader {
     position: absolute;
     width: 1px;
@@ -56,7 +95,7 @@
       left: 0;
       margin-top: 4px;
     }
-    
+
 
     label {
       display: block;
@@ -68,7 +107,7 @@
       line-height: 20px;
     }
 
-    input{
+    input {
       position: relative;
       display: block;
       width: 80%;
@@ -80,18 +119,19 @@
     }
 
   }
-  input[type="checkbox"]:checked + .labelBox .checkIcon {
+
+  input[type="checkbox"]:checked+.labelBox .checkIcon {
     border-color: #ffd455;
     background-color: #ffd455;
     transition: 0.1s;
   }
 
-  input[type="checkbox"]:checked + .labelBox label{
+  input[type="checkbox"]:checked+.labelBox label {
     text-decoration: line-through;
     color: #666;
   }
 
-  .menu{
+  .menu {
     cursor: pointer;
     position: absolute;
     display: flex;
@@ -105,7 +145,8 @@
     transform: translateY(-50%);
     right: 0;
     transition: 0.2s;
-    span{
+
+    span {
       display: block;
       width: 3px;
       height: 3px;
@@ -114,27 +155,9 @@
       margin: 1px 0;
     }
   }
-  .menu:hover{
+
+  .menu:hover {
     background: #ebebeb;
   }
 
-  .menuPopup{
-    position: absolute;
-    right: 0;
-    width: 100px;
-    background: #fff;
-    border: 1px solid #f3f3f3;
-    z-index: 1;
-    li{
-      width: 100%;
-    }
-    button{
-      width: 100%;
-      border-radius: 0;
-      background-color: #fff;
-    }
-    button:hover{
-      background-color: #ebebeb;
-    }
-  }
 }
