@@ -30,6 +30,7 @@ function TodoList({ todoList, setTodoList, onDeleteClick }: TodoListProps) {
             투두리스트 드래그로 위치 조절
 
             기능 추가 구현
+            수정할때 input 칸에 원래 내용 출력하기
             한번에 하나씩만 수정하기
             디자인 변경
             타이틀에 초 띄우기
