@@ -1,5 +1,5 @@
 // 투두 메뉴 출력
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef, useState, Ref } from 'react';
 import style from '../css/Todo/Todo.module.scss';
 import TodoItem from './TodoItem';
 import { Todo, TodoListProps } from '../types/todo';
@@ -8,7 +8,8 @@ import { Todo, TodoListProps } from '../types/todo';
 function TodoListPrint({ todoList, setTodoList, onDeleteClick }: TodoListProps) {
     // const [isEditing, setIsEditing] = useState<boolean>(false);
     const [editingId, setEditingId] = useState<number | null>(null);
-    
+    const listRef = useRef<HTMLDivElement | null>(null);
+
     const handleUpdateTodo = (todoId: number, trimmed: string) => {
         // 수정 로직
         const updateList = todoList.map((todo) =>
@@ -18,10 +19,9 @@ function TodoListPrint({ todoList, setTodoList, onDeleteClick }: TodoListProps) 
         setTodoList(updateList);
 
     }
-
-
+    
     return (
-        <div className={style.todoList}>
+        <div className={style.todoList} ref={listRef}>
             <ul>
                 {todoList.map((todo) => (
                     <TodoItem
@@ -32,6 +32,7 @@ function TodoListPrint({ todoList, setTodoList, onDeleteClick }: TodoListProps) 
                         isEditing={editingId == todo.id}
                         startEditing={() => setEditingId(todo.id)}
                         stopEditing={() => setEditingId(null)}
+                        listRef={listRef}
                     />
                 ))}
             </ul>

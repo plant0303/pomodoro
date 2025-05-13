@@ -1,13 +1,15 @@
 import React, { useRef, useState, useLayoutEffect, useEffect } from "react";
 import style from "../css/Todo/Todo.module.scss";
+import { compileString } from "sass";
 
 interface TodoMenuProps {
   todoId: number;
   setIsEditing: (editing: boolean) => void;
   onDelete: (id: number) => void;
+  listRef: React.RefObject<HTMLDivElement | null>;
 }
 
-function TodoMenu({ todoId, setIsEditing, onDelete }: TodoMenuProps) {
+function TodoMenu({ todoId, setIsEditing, onDelete, listRef }: TodoMenuProps) {
   const menuRef = useRef<{ [key: number]: HTMLDivElement | null }>({});
   const menuPopupRef = useRef<HTMLDivElement | null>(null); // 메뉴 팝업 ref
   const [openMenuId, setOpenMenuId] = useState<number | null>(null);
@@ -19,11 +21,13 @@ function TodoMenu({ todoId, setIsEditing, onDelete }: TodoMenuProps) {
 
   // 메뉴 위치 판단 (렌더링 직후)
   useLayoutEffect(() => {
-    if (openMenuId !== null && menuPopupRef.current) {
-      const rect = menuPopupRef.current.getBoundingClientRect();
-      const spaceBelow = window.innerHeight - rect.bottom;
-      const spaceAbove = rect.top;
-      const MENU_HEIGHT = rect.height || 100;
+    if (openMenuId !== null && listRef.current && menuPopupRef.current) {
+      const menuRect = menuPopupRef.current.getBoundingClientRect();
+      const containerRect = listRef.current.getBoundingClientRect();
+
+      const spaceBelow = containerRect.bottom - menuRect.bottom; // 아래 여유 공간
+      const spaceAbove = menuRect.top - containerRect.top; // 위 여유 공간
+      const MENU_HEIGHT = menuRect.height || 100;
 
       setOpenUpward(spaceBelow < MENU_HEIGHT && spaceAbove > MENU_HEIGHT);
     }

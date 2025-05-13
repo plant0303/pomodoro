@@ -10,9 +10,10 @@ interface TodoItemProps {
     isEditing: boolean;
     startEditing: () => void;
     stopEditing: () => void;
+    listRef: React.RefObject<HTMLDivElement | null>;
 }
 
-function TodoItem({ todo, onDelete, onUpdate, isEditing, startEditing, stopEditing }: TodoItemProps) {
+function TodoItem({ todo, onDelete, onUpdate, isEditing, startEditing, stopEditing, listRef }: TodoItemProps) {
     const [updateTodo, setUpdateTodo] = useState<string>(""); // 투두 수정
     const inputRef = useRef<HTMLInputElement>(null); // 수정 input에 자동 포커스
 
@@ -54,7 +55,7 @@ function TodoItem({ todo, onDelete, onUpdate, isEditing, startEditing, stopEditi
                     <label htmlFor={`todo-${todo.id}`}>{todo.todo}</label>
                 </div>
             }
-            <TodoMenu todoId={todo.id} setIsEditing={startEditing} onDelete={onDelete}/>
+            <TodoMenu todoId={todo.id} setIsEditing={startEditing} onDelete={onDelete} listRef={listRef}/>
         </li>
     );
 }
