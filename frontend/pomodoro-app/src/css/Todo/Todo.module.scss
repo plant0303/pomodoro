@@ -25,9 +25,7 @@
   width: 80%;
   margin-top: 10px;
   overflow-y: scroll;
-  overflow-anchor: none;
-  contain: layout;
-
+  overflow-x: hidden;
 
   .todoLi {
     position: relative;
@@ -44,9 +42,9 @@
         width: 100px;
         background: #fff;
         border: 1px solid #f3f3f3;
-          max-height: 200px;        // 메뉴 최대 높이 제한 (원하는 대로 조절)
-  overflow-y: auto;         // 메뉴 내부 스크롤 허용
-  box-sizing: border-box;
+        max-height: 200px; // 메뉴 최대 높이 제한 (원하는 대로 조절)
+        overflow-y: auto; // 메뉴 내부 스크롤 허용
+        box-sizing: border-box;
 
         li {
           width: 100%;
@@ -83,6 +81,7 @@
   .labelBox {
     display: flex;
     align-items: flex-start;
+    overflow-wrap: break-word;
 
     .checkIcon {
       width: 1.4em;
@@ -92,7 +91,6 @@
       border: 1px solid gray;
       position: absolute;
       left: 0;
-      margin-top: 4px;
     }
 
 
@@ -144,6 +142,7 @@
     transform: translateY(-50%);
     right: 0;
     transition: 0.2s;
+    margin-right: 15px;
 
     span {
       display: block;
@@ -159,4 +158,13 @@
     background: #ebebeb;
   }
 
+}
+
+.todoList::-webkit-scrollbar {
+  width: 8px;
+}
+
+.todoList::-webkit-scrollbar-thumb {
+  background-color: #e5e5e5;
+  border-radius: 5px;
 }
