@@ -21,7 +21,7 @@ function App() {
   useEffect(() => {
     const hasVisited = localStorage.getItem("hasVisited");
 
-    if(!hasVisited){
+    if (!hasVisited) {
       const defaultTodos: Todo[] = [
         { id: 1, todo: "이번 세션동안 진행할 일을 기록해보세요.", completed: false }
       ];
@@ -32,8 +32,25 @@ function App() {
     }
   }, []);
 
+useEffect(() => {
+  const handleKeyDown = (e: KeyboardEvent) => {
+    if (e.key === 'Escape') {
+      setShowDeleteModal(false);
+    }
+  };
+
+  if (showDeleteModal) {
+    window.addEventListener('keydown', handleKeyDown);
+  }
+
+  return () => {
+    // showDeleteModal이 false가 되거나 컴포넌트가 언마운트 될 때 이벤트 제거
+    window.removeEventListener('keydown', handleKeyDown);
+  };
+}, [showDeleteModal]);
+
   const [selectedTodoId, setSelectedTodoId] = useState<number | null>(null);
-  
+
   const handleDeleteRequest = (id: number) => {
     setShowDeleteModal(true);
     setSelectedTodoId(id);
@@ -41,7 +58,7 @@ function App() {
 
 
   // 삭제 모달
-  const handleConfirmDelete =() => {
+  const handleConfirmDelete = () => {
     if (selectedTodoId !== null) {
       setTodoList(todoList.filter((todo) => todo.id !== selectedTodoId));
       setSelectedTodoId(null);
@@ -55,7 +72,7 @@ function App() {
 
   // todo 삭제
   const confirmDelete = () => {
-    if(selectedTodoId !== null){
+    if (selectedTodoId !== null) {
 
     }
   }
@@ -76,16 +93,16 @@ function App() {
           <PomodoroTimer></PomodoroTimer>
         </div>
         <div className="todo">
-          <TodoList 
-            todoList={todoList} 
-            setTodoList={setTodoList} 
-            onDeleteClick={handleDeleteRequest} 
-            />
+          <TodoList
+            todoList={todoList}
+            setTodoList={setTodoList}
+            onDeleteClick={handleDeleteRequest}
+          />
         </div>
       </div>
 
-      {showDeleteModal == true && 
-      <DeleteModal onConfirm={handleConfirmDelete} onCancel={handleCancelDelete}></DeleteModal>}
+      {showDeleteModal == true &&
+        <DeleteModal onConfirm={handleConfirmDelete} onCancel={handleCancelDelete}></DeleteModal>}
     </div>
   );
 }
