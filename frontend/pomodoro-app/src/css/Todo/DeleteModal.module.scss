@@ -22,6 +22,11 @@
     .popupBtn{
       display: flex;
       padding-top: 10px;
+      justify-content: space-between;
+      
+      button{
+        width: 48%;
+      }
     }
   }
 }
