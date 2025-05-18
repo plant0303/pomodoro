@@ -19,11 +19,13 @@ function TodoListPrint({ todoList, setTodoList, onDeleteClick }: TodoListProps) 
         setTodoList(updateList);
 
     }
+
     
     return (
         <div className={style.todoList} ref={listRef}>
-            <ul>
-                {todoList.map((todo) => (
+            <ul> 
+                {todoList.length === 0 ? <span className={style.todoNull}>작성된 todo가 없습니다</span>
+                : todoList.map((todo) => (
                     <TodoItem
                         key={todo.id}
                         todo={todo}
