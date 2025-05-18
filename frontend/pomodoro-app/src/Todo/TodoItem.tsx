@@ -16,19 +16,23 @@ interface TodoItemProps {
 function TodoItem({ todo, onDelete, onUpdate, isEditing, startEditing, stopEditing, listRef }: TodoItemProps) {
     const [updateTodo, setUpdateTodo] = useState<string>(todo.todo); // 투두 수정
     const inputRef = useRef<HTMLInputElement>(null); // 수정 input에 자동 포커스
-
+    const pastTodo = todo.todo;
 
     const handleUpdate = (e: React.KeyboardEvent<HTMLInputElement>) => {
         if (e.key === "Enter") {
             const trimmed = updateTodo.trim();
-            // 공백만 있을 경우
-            if (trimmed === "") return;
 
-            onUpdate(todo.id, trimmed);
-            stopEditing();
+            if (trimmed === "") {
+                onUpdate(todo.id, pastTodo); // 원래 값으로 복구
+            } else {
+                onUpdate(todo.id, trimmed);  // 수정된 값 저장
+            }
+
+            stopEditing(); // 공통 처리
         }
     }
 
+    // 수정영역 input 자동 포커스
     useEffect(() => {
         if(isEditing && inputRef.current){
             inputRef.current.focus();
