@@ -14,7 +14,7 @@ interface TodoItemProps {
 }
 
 function TodoItem({ todo, onDelete, onUpdate, isEditing, startEditing, stopEditing, listRef }: TodoItemProps) {
-    const [updateTodo, setUpdateTodo] = useState<string>(""); // 투두 수정
+    const [updateTodo, setUpdateTodo] = useState<string>(todo.todo); // 투두 수정
     const inputRef = useRef<HTMLInputElement>(null); // 수정 input에 자동 포커스
 
 
@@ -28,7 +28,6 @@ function TodoItem({ todo, onDelete, onUpdate, isEditing, startEditing, stopEditi
             stopEditing();
         }
     }
-
 
     useEffect(() => {
         if(isEditing && inputRef.current){
