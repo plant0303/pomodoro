@@ -20,6 +20,22 @@ function TodoListPrint({ todoList, setTodoList, onDeleteClick }: TodoListProps) 
 
     }
 
+    // 드래그 앤 드롭 순서 바꾸기
+const onDropTodo = (fromId: number, toId: number) => {
+  setTodoList((prevTodos) => {
+    const fromIndex = prevTodos.findIndex(todo => todo.id === fromId);
+    const toIndex = prevTodos.findIndex(todo => todo.id === toId);
+    
+    if (fromIndex === -1 || toIndex === -1) return prevTodos;
+
+    const updatedTodos = [...prevTodos];
+    const [movedItem] = updatedTodos.splice(fromIndex, 1);
+    updatedTodos.splice(toIndex, 0, movedItem);
+
+    return updatedTodos;
+  });
+};
+
     
     return (
         <div className={style.todoList} ref={listRef}>
@@ -35,6 +51,7 @@ function TodoListPrint({ todoList, setTodoList, onDeleteClick }: TodoListProps) 
                         startEditing={() => setEditingId(todo.id)}
                         stopEditing={() => setEditingId(null)}
                         listRef={listRef}
+                        onDropTodo={onDropTodo}
                     />
                 ))}
             </ul>
