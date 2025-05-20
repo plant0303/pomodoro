@@ -100,7 +100,7 @@
       background-color: #fff;
       border: 1px solid gray;
       position: absolute;
-      left: 0;
+      left: 10px;
     }
 
 
@@ -152,7 +152,7 @@
     transform: translateY(-50%);
     right: 0;
     transition: 0.2s;
-    margin-right: 15px;
+    margin-right: 10px;
 
     span {
       display: block;
@@ -171,7 +171,7 @@
 }
 
 .todoList::-webkit-scrollbar {
-  width: 8px;
+  width: 5px;
 }
 
 .todoList::-webkit-scrollbar-thumb {
