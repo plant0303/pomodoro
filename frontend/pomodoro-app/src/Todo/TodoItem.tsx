@@ -13,42 +13,48 @@ interface TodoItemProps {
     stopEditing: () => void;
     listRef: React.RefObject<HTMLDivElement | null>;
     onDropTodo: (fromId: number, toId: number) => void;
+    dragOverId: number | null;
+    setDragOverId: React.Dispatch<React.SetStateAction<number | null>>;
 }
 
-function TodoItem({ todo, onDelete, onUpdate, isEditing, startEditing, stopEditing, listRef, onDropTodo }: TodoItemProps) {
+function TodoItem({ todo, onDelete, onUpdate, isEditing, startEditing, stopEditing, listRef, onDropTodo, dragOverId, setDragOverId }: TodoItemProps) {
 
     const itemRef = useRef<HTMLLIElement | null>(null);
+
 
     // 투두 드래그
     // 드래그 시작
     const handleDragStart = (e: React.DragEvent<HTMLLIElement>) => {
-        e.dataTransfer.setData("text/plain", String(todo.id)); // 드래그 중인 아이템 id 저장하기
-        console.log(e.dataTransfer.setData("text/plain", String(todo.id)));
+        const startId = e.dataTransfer.setData("text/plain", String(todo.id)); // 드래그 중인 아이템 id 저장하기
     }
 
     // 드래그 중
     const handleDragOver = (e: React.DragEvent<HTMLLIElement>) => {
         e.preventDefault();
+        setDragOverId(todo.id);
     };
+
     // 드래그 끝
     const handleDrop = (e: React.DragEvent<HTMLLIElement>) => {
         e.preventDefault();
         const draggedId = Number(e.dataTransfer.getData("text/plain"));
         const targetId = todo.id;
-
+        setDragOverId(null);
         // 이 두 id를 상위 컴포넌트로 전달
         onDropTodo(draggedId, targetId);
     };
 
+
     return (
         <li 
-        ref={itemRef} 
-        key={`todo${todo.id}`} 
-        className={style.todoLi} 
-        draggable='true'
-        onDragStart={handleDragStart}
-        onDragOver={handleDragOver}
-        onDrop={handleDrop}>
+  data-id={todo.id}
+  ref={itemRef} 
+  draggable='true'
+  onDragStart={handleDragStart}
+  onDragOver={handleDragOver}
+  onDrop={handleDrop}
+  className={`${style.todoLi} ${dragOverId === todo.id ? style.dragOver : ""}`}
+>
             <input type="checkbox"
                 id={`todo-${todo.id}`}
                 className={style.screenReader} />
