@@ -17,10 +17,10 @@ interface TodoItemProps {
     setDragOverId: React.Dispatch<React.SetStateAction<number | null>>;
 }
 
-function TodoItem({ todo, onDelete, onUpdate, isEditing, startEditing, stopEditing, listRef, onDropTodo, dragOverId, setDragOverId }: TodoItemProps) {
+function TodoItem({ todo, onDelete, onUpdate, isEditing, startEditing, stopEditing, listRef, onDropTodo, dragOverId, setDragOverId}: TodoItemProps) {
 
     const itemRef = useRef<HTMLLIElement | null>(null);
-
+    const [checkTodo, setCheckTodo] = useState<boolean>(false);
 
     // 투두 드래그
     // 드래그 시작
@@ -45,22 +45,29 @@ function TodoItem({ todo, onDelete, onUpdate, isEditing, startEditing, stopEditi
     };
 
 
+    
     return (
         <li 
-  data-id={todo.id}
-  ref={itemRef} 
-  draggable='true'
-  onDragStart={handleDragStart}
-  onDragOver={handleDragOver}
-  onDrop={handleDrop}
-  className={`${style.todoLi} ${dragOverId === todo.id ? style.dragOver : ""}`}
->
+        data-id={todo.id}
+        ref={itemRef} 
+        draggable='true'
+        onDragStart={handleDragStart}
+        onDragOver={handleDragOver}
+        onDrop={handleDrop}
+        className={`${style.todoLi} ${dragOverId === todo.id ? style.dragOver : ""}`}
+        >
             <input type="checkbox"
                 id={`todo-${todo.id}`}
                 className={style.screenReader} />
             {isEditing ?
-                <TodoUpdate todo={todo} onUpdate={onUpdate} isEditing={isEditing} stopEditing={stopEditing} itemRef={itemRef}/> :
-                <div className={style.labelBox}>
+                <TodoUpdate 
+                    todo={todo} 
+                    onUpdate={onUpdate} 
+                    isEditing={isEditing} 
+                    stopEditing={stopEditing} 
+                    itemRef={itemRef}
+                /> :
+                <div className={style.labelBox}  >
                     <span className={style.checkIcon} aria-hidden="true"></span>
                     <label htmlFor={`todo-${todo.id}`}>{todo.todo}</label>
                 </div>

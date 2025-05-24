@@ -13,10 +13,19 @@ interface Todo {
 
 function App() {
   const [showDeleteModal, setShowDeleteModal] = useState<boolean>(false);
+  const [checkedTodos, setCheckedTodos] = useState<{ [key: string]: boolean }>({});
   const [todoList, setTodoList] = useState<Todo[]>(() => {
     const data = localStorage.getItem('todo');
     return data ? JSON.parse(data) : [];
   });
+
+  const handleCheck = (id: number) => {
+    setCheckedTodos(prev => ({
+      ...prev,
+      [id]: !prev[id],
+    }));
+  };
+
 
   useEffect(() => {
     const hasVisited = localStorage.getItem("hasVisited");
@@ -32,22 +41,22 @@ function App() {
     }
   }, []);
 
-useEffect(() => {
-  const handleKeyDown = (e: KeyboardEvent) => {
-    if (e.key === 'Escape') {
-      setShowDeleteModal(false);
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') {
+        setShowDeleteModal(false);
+      }
+    };
+
+    if (showDeleteModal) {
+      window.addEventListener('keydown', handleKeyDown);
     }
-  };
 
-  if (showDeleteModal) {
-    window.addEventListener('keydown', handleKeyDown);
-  }
-
-  return () => {
-    // showDeleteModal이 false가 되거나 컴포넌트가 언마운트 될 때 이벤트 제거
-    window.removeEventListener('keydown', handleKeyDown);
-  };
-}, [showDeleteModal]);
+    return () => {
+      // showDeleteModal이 false가 되거나 컴포넌트가 언마운트 될 때 이벤트 제거
+      window.removeEventListener('keydown', handleKeyDown);
+    };
+  }, [showDeleteModal]);
 
   const [selectedTodoId, setSelectedTodoId] = useState<number | null>(null);
 
