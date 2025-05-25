@@ -15,9 +15,11 @@ interface TodoItemProps {
     onDropTodo: (fromId: number, toId: number) => void;
     dragOverId: number | null;
     setDragOverId: React.Dispatch<React.SetStateAction<number | null>>;
+    isChecked: boolean;
+      onCheck: (id: number) => void;
 }
 
-function TodoItem({ todo, onDelete, onUpdate, isEditing, startEditing, stopEditing, listRef, onDropTodo, dragOverId, setDragOverId}: TodoItemProps) {
+function TodoItem({ todo, onDelete, onUpdate, isEditing, startEditing, stopEditing, listRef, onDropTodo, dragOverId, setDragOverId, isChecked }: TodoItemProps) {
 
     const itemRef = useRef<HTMLLIElement | null>(null);
     const [checkTodo, setCheckTodo] = useState<boolean>(false);
@@ -45,26 +47,28 @@ function TodoItem({ todo, onDelete, onUpdate, isEditing, startEditing, stopEditi
     };
 
 
-    
+
     return (
-        <li 
-        data-id={todo.id}
-        ref={itemRef} 
-        draggable='true'
-        onDragStart={handleDragStart}
-        onDragOver={handleDragOver}
-        onDrop={handleDrop}
-        className={`${style.todoLi} ${dragOverId === todo.id ? style.dragOver : ""}`}
+        <li
+            data-id={todo.id}
+            ref={itemRef}
+            draggable='true'
+            onDragStart={handleDragStart}
+            onDragOver={handleDragOver}
+            onDrop={handleDrop}
+            className={`${style.todoLi} ${dragOverId === todo.id ? style.dragOver : ""}`}
         >
             <input type="checkbox"
                 id={`todo-${todo.id}`}
-                className={style.screenReader} />
+                className={style.screenReader}
+                checked={isChecked}
+                readOnly />
             {isEditing ?
-                <TodoUpdate 
-                    todo={todo} 
-                    onUpdate={onUpdate} 
-                    isEditing={isEditing} 
-                    stopEditing={stopEditing} 
+                <TodoUpdate
+                    todo={todo}
+                    onUpdate={onUpdate}
+                    isEditing={isEditing}
+                    stopEditing={stopEditing}
                     itemRef={itemRef}
                 /> :
                 <div className={style.labelBox}  >

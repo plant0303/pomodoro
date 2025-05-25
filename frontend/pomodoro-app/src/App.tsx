@@ -106,6 +106,8 @@ function App() {
             todoList={todoList}
             setTodoList={setTodoList}
             onDeleteClick={handleDeleteRequest}
+            onCheck={handleCheck}
+            checkedTodos={checkedTodos}
           />
         </div>
       </div>

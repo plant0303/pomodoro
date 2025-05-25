@@ -2,14 +2,21 @@
 import React, { useEffect, useRef, useState, Ref } from 'react';
 import style from '../css/Todo/Todo.module.scss';
 import TodoItem from './TodoItem';
-import { Todo, TodoListProps } from '../types/todo';
+import { Todo } from '../types/todo';
 
+interface TodoListProps {
+    todoList: Todo[];
+    setTodoList: React.Dispatch<React.SetStateAction<Todo[]>>;
+    onDeleteClick: (id: number) => void;
+    onCheck: (id: number) => void;
+    checkedTodos: { [id: number]: boolean };
+}
 
-function TodoListPrint({ todoList, setTodoList, onDeleteClick }: TodoListProps) {
+function TodoListPrint({ todoList, setTodoList, onDeleteClick, onCheck, checkedTodos }: TodoListProps) {
     // const [isEditing, setIsEditing] = useState<boolean>(false);
     const [editingId, setEditingId] = useState<number | null>(null);
     const listRef = useRef<HTMLDivElement | null>(null);
-const [dragOverId, setDragOverId] = useState<number | null>(null);
+    const [dragOverId, setDragOverId] = useState<number | null>(null);
 
     const handleUpdateTodo = (todoId: number, trimmed: string) => {
         // 수정 로직
@@ -55,6 +62,8 @@ const [dragOverId, setDragOverId] = useState<number | null>(null);
                             onDropTodo={onDropTodo}
                             dragOverId={dragOverId}
                             setDragOverId={setDragOverId}
+                            onCheck={onCheck}
+                            isChecked={!!checkedTodos[todo.id]} // 전달!!!
                         />
                     ))}
             </ul>

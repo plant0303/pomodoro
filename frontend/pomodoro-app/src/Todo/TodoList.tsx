@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
 
 // ts
-import { Todo, TodoListProps } from '../types/todo';
+import { Todo } from '../types/todo';
 
 //css
 import style from "../css/Todo/Todo.module.scss";
@@ -9,8 +9,16 @@ import style from "../css/Todo/Todo.module.scss";
 import TodoInput from './TodoInout';
 import TodoListPrint from "./TodoListPrint";
 
+interface TodoListProps {
+  todoList: Todo[];
+  setTodoList: React.Dispatch<React.SetStateAction<Todo[]>>;
+  onDeleteClick: (id: number) => void;
+  onCheck: (id: number) => void;
+  checkedTodos: { [key: number]: boolean };
+}
 
-function TodoList({ todoList, setTodoList, onDeleteClick }: TodoListProps) {
+
+function TodoList({ todoList, setTodoList, onDeleteClick, onCheck, checkedTodos  }: TodoListProps) {
 
     return (
         <>
@@ -21,7 +29,10 @@ function TodoList({ todoList, setTodoList, onDeleteClick }: TodoListProps) {
             <TodoListPrint
                 todoList={todoList}
                 setTodoList={setTodoList}
-                onDeleteClick={onDeleteClick} />
+                onDeleteClick={onDeleteClick} 
+                onCheck={onCheck}
+                checkedTodos={checkedTodos}
+                />
             {/*
             편의성 패치
             투두 수정하고 아무곳이나 누르면 수정 완료되게
