@@ -2,10 +2,17 @@
 import React, { useEffect, useRef, useState, Ref } from 'react';
 import style from '../css/Todo/Todo.module.scss';
 import TodoItem from './TodoItem';
-import { Todo, TodoListProps } from '../types/todo';
+import { Todo } from '../types/todo';
 
 
-function TodoListPrint({ todoList, setTodoList, onDeleteClick }: TodoListProps) {
+interface TodoListProps {
+    todoList: Todo[];
+    setTodoList: React.Dispatch<React.SetStateAction<Todo[]>>;
+    onDeleteClick: (id: number) => void;
+    onToggleComplete: (id: number) => void;
+}
+
+function TodoListPrint({ todoList, setTodoList, onDeleteClick, onToggleComplete }: TodoListProps) {
     // const [isEditing, setIsEditing] = useState<boolean>(false);
     const [editingId, setEditingId] = useState<number | null>(null);
     const listRef = useRef<HTMLDivElement | null>(null);
@@ -55,6 +62,7 @@ const [dragOverId, setDragOverId] = useState<number | null>(null);
                             onDropTodo={onDropTodo}
                             dragOverId={dragOverId}
                             setDragOverId={setDragOverId}
+                            onToggleComplete={onToggleComplete}
                         />
                     ))}
             </ul>
