@@ -8,11 +8,10 @@ interface TodoListProps {
     todoList: Todo[];
     setTodoList: React.Dispatch<React.SetStateAction<Todo[]>>;
     onDeleteClick: (id: number) => void;
-    onCheck: (id: number) => void;
-    checkedTodos: { [id: number]: boolean };
+    onToggleComplete: (id: number) => void;
 }
 
-function TodoListPrint({ todoList, setTodoList, onDeleteClick, onCheck, checkedTodos }: TodoListProps) {
+function TodoListPrint({ todoList, setTodoList, onDeleteClick, onToggleComplete }: TodoListProps) {
     // const [isEditing, setIsEditing] = useState<boolean>(false);
     const [editingId, setEditingId] = useState<number | null>(null);
     const listRef = useRef<HTMLDivElement | null>(null);
@@ -62,8 +61,7 @@ function TodoListPrint({ todoList, setTodoList, onDeleteClick, onCheck, checkedT
                             onDropTodo={onDropTodo}
                             dragOverId={dragOverId}
                             setDragOverId={setDragOverId}
-                            onCheck={onCheck}
-                            isChecked={!!checkedTodos[todo.id]} // 전달!!!
+                            onToggleComplete={onToggleComplete}
                         />
                     ))}
             </ul>

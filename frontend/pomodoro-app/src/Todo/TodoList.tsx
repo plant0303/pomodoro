@@ -13,13 +13,10 @@ interface TodoListProps {
   todoList: Todo[];
   setTodoList: React.Dispatch<React.SetStateAction<Todo[]>>;
   onDeleteClick: (id: number) => void;
-  onCheck: (id: number) => void;
-  checkedTodos: { [key: number]: boolean };
+  onToggleComplete: (id: number) => void
 }
 
-
-function TodoList({ todoList, setTodoList, onDeleteClick, onCheck, checkedTodos  }: TodoListProps) {
-
+function TodoList({ todoList, setTodoList, onDeleteClick, onToggleComplete }: TodoListProps) {
     return (
         <>
             <h2 className={style.todoTitle}>Todo</h2>
@@ -30,9 +27,7 @@ function TodoList({ todoList, setTodoList, onDeleteClick, onCheck, checkedTodos 
                 todoList={todoList}
                 setTodoList={setTodoList}
                 onDeleteClick={onDeleteClick} 
-                onCheck={onCheck}
-                checkedTodos={checkedTodos}
-                />
+                onToggleComplete={onToggleComplete}/>
             {/*
             편의성 패치
             투두 수정하고 아무곳이나 누르면 수정 완료되게

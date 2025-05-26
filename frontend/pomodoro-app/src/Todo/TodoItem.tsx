@@ -15,14 +15,14 @@ interface TodoItemProps {
     onDropTodo: (fromId: number, toId: number) => void;
     dragOverId: number | null;
     setDragOverId: React.Dispatch<React.SetStateAction<number | null>>;
-    isChecked: boolean;
-      onCheck: (id: number) => void;
+    onToggleComplete: (id: number) => void;
 }
 
-function TodoItem({ todo, onDelete, onUpdate, isEditing, startEditing, stopEditing, listRef, onDropTodo, dragOverId, setDragOverId, isChecked }: TodoItemProps) {
+function TodoItem({ todo, onDelete, onUpdate, isEditing, startEditing, stopEditing, listRef, onDropTodo, dragOverId, setDragOverId, onToggleComplete }: TodoItemProps) {
 
     const itemRef = useRef<HTMLLIElement | null>(null);
-    const [checkTodo, setCheckTodo] = useState<boolean>(false);
+    const checkTodo = useState<boolean>(false);
+
 
     // 투두 드래그
     // 드래그 시작
@@ -47,7 +47,6 @@ function TodoItem({ todo, onDelete, onUpdate, isEditing, startEditing, stopEditi
     };
 
 
-
     return (
         <li
             data-id={todo.id}
@@ -60,18 +59,12 @@ function TodoItem({ todo, onDelete, onUpdate, isEditing, startEditing, stopEditi
         >
             <input type="checkbox"
                 id={`todo-${todo.id}`}
-                className={style.screenReader}
-                checked={isChecked}
-                readOnly />
+                className={style.screenReader} 
+                checked={todo.completed}
+                onChange={() => onToggleComplete(todo.id)}/>
             {isEditing ?
-                <TodoUpdate
-                    todo={todo}
-                    onUpdate={onUpdate}
-                    isEditing={isEditing}
-                    stopEditing={stopEditing}
-                    itemRef={itemRef}
-                /> :
-                <div className={style.labelBox}  >
+                <TodoUpdate todo={todo} onUpdate={onUpdate} isEditing={isEditing} stopEditing={stopEditing} itemRef={itemRef} /> :
+                <div className={style.labelBox}>
                     <span className={style.checkIcon} aria-hidden="true"></span>
                     <label htmlFor={`todo-${todo.id}`}>{todo.todo}</label>
                 </div>

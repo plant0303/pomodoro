@@ -13,20 +13,18 @@ interface Todo {
 
 function App() {
   const [showDeleteModal, setShowDeleteModal] = useState<boolean>(false);
-  const [checkedTodos, setCheckedTodos] = useState<{ [key: string]: boolean }>({});
   const [todoList, setTodoList] = useState<Todo[]>(() => {
     const data = localStorage.getItem('todo');
     return data ? JSON.parse(data) : [];
   });
+  const [checkTodo, setCheckTodo] = useState<boolean>(false);
 
-  const handleCheck = (id: number) => {
-    setCheckedTodos(prev => ({
-      ...prev,
-      [id]: !prev[id],
-    }));
-  };
+  const onToggleComplete = (id: number) => {
+    // Todo 에서 id와 일치하는 todo의 complated 상태를 변경해야함
+    setTodoList(prev => prev.map(todo => todo.id === id ? { ...todo, completed: !todo.completed} : todo))
+  }
 
-
+  console.log(todoList);
   useEffect(() => {
     const hasVisited = localStorage.getItem("hasVisited");
 
@@ -41,22 +39,22 @@ function App() {
     }
   }, []);
 
-  useEffect(() => {
-    const handleKeyDown = (e: KeyboardEvent) => {
-      if (e.key === 'Escape') {
-        setShowDeleteModal(false);
-      }
-    };
-
-    if (showDeleteModal) {
-      window.addEventListener('keydown', handleKeyDown);
+useEffect(() => {
+  const handleKeyDown = (e: KeyboardEvent) => {
+    if (e.key === 'Escape') {
+      setShowDeleteModal(false);
     }
+  };
 
-    return () => {
-      // showDeleteModal이 false가 되거나 컴포넌트가 언마운트 될 때 이벤트 제거
-      window.removeEventListener('keydown', handleKeyDown);
-    };
-  }, [showDeleteModal]);
+  if (showDeleteModal) {
+    window.addEventListener('keydown', handleKeyDown);
+  }
+
+  return () => {
+    // showDeleteModal이 false가 되거나 컴포넌트가 언마운트 될 때 이벤트 제거
+    window.removeEventListener('keydown', handleKeyDown);
+  };
+}, [showDeleteModal]);
 
   const [selectedTodoId, setSelectedTodoId] = useState<number | null>(null);
 
@@ -106,8 +104,7 @@ function App() {
             todoList={todoList}
             setTodoList={setTodoList}
             onDeleteClick={handleDeleteRequest}
-            onCheck={handleCheck}
-            checkedTodos={checkedTodos}
+            onToggleComplete={onToggleComplete}
           />
         </div>
       </div>
