@@ -194,6 +194,10 @@ const PomodoroTimer = () => {
     );
   });
 
+  useEffect(() => {
+    localStorage.setItem('timer', JSON.stringify(timers));
+  }, [timers]);
+
   return (
     <>
       <div className={style.timerCont}>
