@@ -18,7 +18,7 @@ function App() {
     const data = localStorage.getItem('todo');
     return data ? JSON.parse(data) : [];
   });
-  const [checkTodo, setCheckTodo] = useState<boolean>(false);
+  const [runTutorial, setRunTutorial] = useState<boolean>(false);
 
   const onToggleComplete = (id: number) => {
     // Todo 에서 id와 일치하는 todo의 complated 상태를 변경해야함
@@ -30,6 +30,7 @@ function App() {
   useEffect(() => {
     const hasVisited = localStorage.getItem("hasVisited");
 
+    // 처음 실행할 때
     if (!hasVisited) {
       const defaultTodos: Todo[] = [
         { id: 1, todo: "이번 세션동안 진행할 일을 기록해보세요.", completed: false }
@@ -38,6 +39,12 @@ function App() {
       localStorage.setItem("todo", JSON.stringify(defaultTodos));
       localStorage.setItem("hasVisited", "true");
       setTodoList(defaultTodos);
+    }
+
+    // joyride 처음 실행할때 
+    if(!hasVisited){
+      setRunTutorial(true);
+      localStorage.setItem("hasVisited", "true");
     }
   }, []);
 
@@ -79,11 +86,10 @@ useEffect(() => {
     setShowDeleteModal(false);
   }
 
-  // todo 삭제
-  const confirmDelete = () => {
-    if (selectedTodoId !== null) {
-
-    }
+  // 튜토리얼 열기 버튼
+  const handleTutorial = () => {
+    setRunTutorial(true);
+    console.log(runTutorial);
   }
 
   return (
@@ -95,6 +101,7 @@ useEffect(() => {
         content: 'click'
       }
     ]}
+    run={runTutorial}
     continuous
     showSkipButton
     disableScrolling={true}
@@ -102,6 +109,11 @@ useEffect(() => {
       options: {
         zIndex: 1000,
       },
+    }}
+    callback={(data) => {
+      if(data.status === "finished" || data.status === "skipped"){
+        setRunTutorial(false);
+      }
     }}
   ></Joyride>
       <header className="header">
@@ -126,7 +138,9 @@ useEffect(() => {
           />
         </div>
       </div>
-
+      <div className="tutorial" onClick={handleTutorial}>
+        <span className="tutorial_btn">?</span>
+      </div>
       {showDeleteModal == true &&
         <DeleteModal onConfirm={handleConfirmDelete} onCancel={handleCancelDelete}></DeleteModal>}
     </div>

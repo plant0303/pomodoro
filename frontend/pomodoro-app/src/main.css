@@ -3,17 +3,18 @@
 * {
   box-sizing: border-box;
 }
+
 body {
+  position: relative;
   font-family: "Noto Sans KR", sans-serif;
   font-optical-sizing: auto;
   background-color: #fafafa;
-  font-weight: 400; /* 기본 가중치 */
+  font-weight: 400;
+  /* 기본 가중치 */
   font-style: normal;
   overflow: hidden;
 }
 
-.body {
-}
 .header {
   position: absolute;
   display: flex;
@@ -30,13 +31,14 @@ body {
   font-size: 20px;
 }
 
-.header .more > span {
+.header .more>span {
   display: block;
   width: 20px;
   height: 1px;
   margin-bottom: 5px;
   background-color: #000;
 }
+
 .cont {
   position: relative;
   width: 100vw;
@@ -44,30 +46,60 @@ body {
   display: flex;
   padding: 0 40px;
 }
+
 .timer {
   position: relative;
   width: 50%;
+  top: 10%;
   justify-content: center;
 }
+
 .todo {
   width: 50%;
   margin-top: 100px;
   padding-left: 50px;
 }
 
+.tutorial {
+  cursor: pointer;
+  position: absolute;
+  display: flex;
+  width: 50px;
+  height: 50px;
+  bottom: 16px;
+  right: 40px;
+  border-radius: 50px;
+  background-color: #fff;
+  box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+  align-items: center;
+  justify-content: center;
+}
+
+.tutorial_btn {
+  position: relative;
+  font-size: 25px;
+  color: #666;
+}
+
 @media screen and (max-width: 900px) {
+  body {
+    position: relative;
+  }
+
   .cont {
     display: block;
-    margin: 50px auto;
   }
+
   .timer {
     display: block;
     width: 100%;
     height: 50%;
   }
+
   .todo {
     width: 100%;
     height: 50%;
     margin-top: 0px;
   }
+
 }
