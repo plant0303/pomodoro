@@ -22,9 +22,10 @@ function App() {
   const onToggleComplete = (id: number) => {
     // Todo 에서 id와 일치하는 todo의 complated 상태를 변경해야함
     setTodoList(prev => prev.map(todo => todo.id === id ? { ...todo, completed: !todo.completed} : todo))
+
   }
 
-  console.log(todoList);
+  
   useEffect(() => {
     const hasVisited = localStorage.getItem("hasVisited");
 

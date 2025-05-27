@@ -32,7 +32,6 @@ function TodoUpdate({ todo, onUpdate, stopEditing, isEditing, itemRef}: TodoUpda
   // enter 입력시 저장
   const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key === "Enter") {
-      console.log(1);
       handleSave();
     }
   }

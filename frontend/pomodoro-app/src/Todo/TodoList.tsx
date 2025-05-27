@@ -29,14 +29,13 @@ function TodoList({ todoList, setTodoList, onDeleteClick, onToggleComplete }: To
                 onDeleteClick={onDeleteClick} 
                 onToggleComplete={onToggleComplete}/>
             {/*
-            편의성 패치
-            투두 수정하고 아무곳이나 누르면 수정 완료되게
-            투두리스트 드래그로 위치 조절
 
             기능 추가 구현
-            삭제 누르면 completed 변경시키기
             뽀모도로 튜토리얼
-            투두 아무것도 없을때 내용 입력하라고 출력하기
+            타이머 로컬스토리지 저장
+            타이머 루틴 기능 개발
+            ---
+            투두 목표량 달성 기능 추가
             */}
         </>
     );

@@ -8,11 +8,22 @@ interface Timer {
 }
 
 const PomodoroTimer = () => {
-  // 타이머 순서와 설정
-  const [timers, setTimers] = useState<Timer[]>([
-    { type: "work", duration: 25 * 60, remaining: 25 * 60 }, // 공부 시간 (25분)
-    { type: "break", duration: 5 * 60, remaining: 5 * 60 }, // 휴식 시간 (5분)
-  ]);
+  const loadTimerFormStorage = () => {
+    const timer = localStorage.getItem('timer');
+
+    if(timer){
+      const parse = JSON.parse(timer);
+      if(Array.isArray(parse) && parse.every(t => t.type && t.duration && t.remaining )){
+        return parse;
+      }
+    }
+    return [
+      { type: "work", duration: 25 * 60, remaining: 25 * 60 }, // 공부 시간 (25분)
+      { type: "break", duration: 5 * 60, remaining: 5 * 60 }, // 휴식 시간 (5분)
+    ];
+  }
+
+  const [timers, setTimers] = useState<Timer[]>(loadTimerFormStorage);
   const [currentTimerIndex, setCurrentTimerIndex] = useState(0);
   const [isRunning, setIsRunning] = useState(false);
 

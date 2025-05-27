@@ -61,7 +61,6 @@ const PomodoroTimer = () => {
         setTimeLeft(initialMinutes * 60);
       }
 
-      console.log(strokeDashoffset);
   const handleMouseDown = (e) => {
     setIsDragging(true);
     const centerX = 60;
