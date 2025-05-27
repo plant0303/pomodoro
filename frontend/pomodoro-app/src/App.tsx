@@ -4,6 +4,7 @@ import "./main.css";
 import PomodoroTimer from "./Timer/PomodoroTimer";
 import TodoList from "./Todo/TodoList";
 import DeleteModal from "./Todo/DeleteModal";
+import Joyride from "react-joyride";
 
 interface Todo {
   id: number;
@@ -87,6 +88,22 @@ useEffect(() => {
 
   return (
     <div className="body">
+        <Joyride
+    steps={[
+      {
+        target: '.PomodoroTimer_startButton__3fwQn',
+        content: 'click'
+      }
+    ]}
+    continuous
+    showSkipButton
+    disableScrolling={true}
+    styles={{
+      options: {
+        zIndex: 1000,
+      },
+    }}
+  ></Joyride>
       <header className="header">
         <h1>TodoMoro</h1>
         <div className="more">
