@@ -40,6 +40,7 @@ body {
 }
 
 .cont {
+  top: 50px; 
   position: relative;
   width: 100vw;
   height: 100vh;
@@ -50,7 +51,6 @@ body {
 .timer {
   position: relative;
   width: 50%;
-  top: 10%;
   justify-content: center;
 }
 
