@@ -1,10 +1,17 @@
 import React, { useEffect, useState } from "react";
+
 import "./default.css";
 import "./main.css";
+import "./css/theme.css";
+
 import useTodo from "./hooks/useTodo";
-import PomodoroTimer from "./Timer/PomodoroTimer";
-import TodoList from "./Todo/TodoList";
-import DeleteModal from "./Todo/DeleteModal";
+import PomodoroTimer from "./components/Timer/PomodoroTimer";
+import TodoList from "./components/Todo/TodoList";
+import DeleteModal from "./components/Todo/DeleteModal";
+import ThemeToggleButton from "./components/ThemeToggleButton";
+
+import { ThemeProvider } from './contexts/ThemeContext';
+
 import Joyride from "react-joyride";
 
 interface Todo {
@@ -14,7 +21,6 @@ interface Todo {
 }
 
 function App() {
-
   const {
         todoList,
         setTodoList,
@@ -53,6 +59,7 @@ function App() {
   }
 
   return (
+    <ThemeProvider>
     <div className="body">
       <Joyride
         steps={[
@@ -99,11 +106,14 @@ function App() {
         </div>
       </div>
       <div className="tutorial" onClick={handleTutorial}>
+        <ThemeToggleButton />
+
         <span className="tutorial_btn">?</span>
       </div>
       {showDeleteModal == true &&
         <DeleteModal onConfirm={handleConfirmDelete} onCancel={handleCancelDelete}></DeleteModal>}
     </div>
+    </ThemeProvider>
   );
 }
 

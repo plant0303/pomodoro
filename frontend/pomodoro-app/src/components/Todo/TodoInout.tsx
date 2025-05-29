@@ -1,6 +1,6 @@
 // 새로운 투두 입력받기
 import React, { useEffect, useState } from "react"
-import style from "../css/Todo/Todo.module.scss"
+import style from "../../css/Todo/Todo.module.scss"
 interface Todo {
     id: number;
     todo: string;

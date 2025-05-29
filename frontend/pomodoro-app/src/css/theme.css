@@ -1,0 +1,18 @@
+/* 기본 공통 스타일 */
+.app {
+  font-family: sans-serif;
+  transition:  0.3s, color 0.3s;
+  min-height: 100vh;
+}
+
+/* 라이트 모드 */
+.app.light {
+  background-color: #ffffff;
+  color: #000000;
+}
+
+/* 다크 모드 */
+.app.dark {
+  background-color: #121212;
+  color: #ffffff;
+}

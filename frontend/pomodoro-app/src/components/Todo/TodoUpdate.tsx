@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
-import style from '../css/Todo/Todo.module.scss';
-import { Todo, TodoListProps } from '../types/todo';
+import style from '../../css/Todo/Todo.module.scss';
+import { Todo, TodoListProps } from '../../types/todo';
 
 interface TodoUpdateProps {
   todo: Todo;

@@ -1,10 +1,10 @@
 import React, { useEffect, useRef, useState } from "react";
 
 // ts
-import { Todo } from '../types/todo';
+import { Todo } from '../../types/todo';
 
 //css
-import style from "../css/Todo/Todo.module.scss";
+import style from "../../css/Todo/Todo.module.scss";
 
 import TodoInput from './TodoInout';
 import TodoListPrint from "./TodoListPrint";

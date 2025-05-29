@@ -1,5 +1,5 @@
 import React from 'react'
-import style from '../css/Todo/DeleteModal.module.scss'
+import style from '../../css/Todo/DeleteModal.module.scss'
 
 interface DeleteModalProps {
   onConfirm: () => void;

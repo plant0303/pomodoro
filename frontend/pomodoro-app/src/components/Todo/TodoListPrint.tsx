@@ -1,8 +1,8 @@
 // 투두 메뉴 출력
 import React, { useEffect, useRef, useState, Ref } from 'react';
-import style from '../css/Todo/Todo.module.scss';
+import style from '../../css/Todo/Todo.module.scss';
 import TodoItem from './TodoItem';
-import { Todo } from '../types/todo';
+import { Todo } from '../../types/todo';
 
 interface TodoListProps {
     todoList: Todo[];

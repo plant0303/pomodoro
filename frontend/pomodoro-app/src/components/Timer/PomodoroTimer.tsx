@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useMemo } from "react";
-import style from "../css/Timer/PomodoroTimer.module.scss";
+import style from "../../css/Timer/PomodoroTimer.module.scss";
 
 interface Timer {
   type: string;
