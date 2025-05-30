@@ -31,12 +31,34 @@ body {
   font-size: 20px;
 }
 
+.header .more{
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  width: 40px;
+  height: 40px;
+  padding: 5px;
+  border-radius: 50px;
+  justify-content: center;
+  align-items: center;
+  transition: 0.2s;
+}
+
 .header .more>span {
   display: block;
   width: 20px;
   height: 1px;
   margin-bottom: 5px;
   background-color: #000;
+}
+
+.header .more>span:last-child{
+  margin-bottom: 0;
+}
+
+
+.header .more:hover{
+  background-color: #eeeeee;
 }
 
 .cont {
