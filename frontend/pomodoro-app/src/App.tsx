@@ -86,9 +86,16 @@ function App() {
       <header className="header">
         <h1>TodoMoro</h1>
         <div className="more">
-          <span></span>
-          <span></span>
-          <span></span>
+          <div className="moreBtn">
+            <span></span>
+            <span></span>
+            <span></span>
+          </div>
+          <div className="moreMenu">
+            <ul>
+              <li>1</li>
+            </ul>
+          </div>
         </div>
       </header>
 

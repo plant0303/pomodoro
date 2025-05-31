@@ -32,6 +32,12 @@ body {
 }
 
 .header .more{
+  position: relative;
+  display: block;
+}
+
+.header .more .moreBtn{
+  position: relative;
   cursor: pointer;
   display: flex;
   flex-direction: column;
@@ -44,7 +50,7 @@ body {
   transition: 0.2s;
 }
 
-.header .more>span {
+.header .more .moreBtn>span {
   display: block;
   width: 20px;
   height: 1px;
@@ -52,12 +58,39 @@ body {
   background-color: #000;
 }
 
-.header .more>span:last-child{
+.header .more .moreBtn>span:last-child{
   margin-bottom: 0;
 }
 
 
-.header .more:hover{
+.header .more .moreBtn:hover{
+  background-color: #eeeeee;
+}
+
+.header .more .moreMenu{
+  z-index: 3;
+  position: absolute;
+  display: block;
+  width: 200px;
+  border: 1px solid #dcdcdc;
+  border-radius: 8px;
+  background-color: #fff;
+  right: 0;
+  box-shadow: rgba(149, 157, 165, 0.1) 0px 8px 24px;
+  transition: 0.2s;
+}
+
+.header .more .moreMenu ul li{
+  cursor: pointer;
+  padding: 0 8px;
+  border-radius: 6px;
+  line-height: 120%;
+  min-height: 28px;
+  display: flex;
+  align-items: center;
+}
+
+.header .more .moreMenu ul li:hover{
   background-color: #eeeeee;
 }
 
