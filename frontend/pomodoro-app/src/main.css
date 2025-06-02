@@ -50,7 +50,8 @@ body {
   transition: 0.2s;
 }
 
-.header .more .moreBtn>span {
+/* 메뉴 닫힘 아이콘 */
+.header .more .moreBtn.close>span {
   display: block;
   width: 20px;
   height: 1px;
@@ -58,19 +59,37 @@ body {
   background-color: #000;
 }
 
-.header .more .moreBtn>span:last-child{
+.header .more .moreBtn.close>span:last-child{
   margin-bottom: 0;
 }
 
-
-.header .more .moreBtn:hover{
+.header .more .moreBtn.close:hover{
   background-color: #eeeeee;
 }
+
+/* 메뉴 열림 아이콘 */
+.header .more .moreBtn.close>span {
+  display: block;
+  width: 20px;
+  height: 1px;
+  margin-bottom: 5px;
+  background-color: #000;
+}
+
+.header .more .moreBtn.close>span:last-child{
+  margin-bottom: 0;
+}
+
+.header .more .moreBtn.close:hover{
+  background-color: #eeeeee;
+}
+
 
 .header .more .moreMenu{
   z-index: 3;
   position: absolute;
   display: block;
+  padding: 10px 5px;
   width: 200px;
   border: 1px solid #dcdcdc;
   border-radius: 8px;

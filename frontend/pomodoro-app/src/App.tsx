@@ -86,14 +86,15 @@ function App() {
       <header className="header">
         <h1>TodoMoro</h1>
         <div className="more">
-          <div className="moreBtn">
+          <div className="moreBtn open">
             <span></span>
             <span></span>
             <span></span>
           </div>
           <div className="moreMenu">
             <ul>
-              <li>1</li>
+              <li><ThemeToggleButton /></li>
+              <li>설정</li>
             </ul>
           </div>
         </div>
@@ -113,8 +114,6 @@ function App() {
         </div>
       </div>
       <div className="tutorial" onClick={handleTutorial}>
-        <ThemeToggleButton />
-
         <span className="tutorial_btn">?</span>
       </div>
       {showDeleteModal == true &&
