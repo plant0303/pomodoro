@@ -34,7 +34,7 @@ function App() {
         handleCancelDelete
   } = useTodo();
 
-  // ESC
+  // ESC 삭제 모달
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
       if (e.key === 'Escape') {
@@ -94,7 +94,6 @@ function App() {
           <div className="moreMenu">
             <ul>
               <li><ThemeToggleButton /></li>
-              <li>설정</li>
             </ul>
           </div>
         </div>
