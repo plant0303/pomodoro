@@ -1,9 +1,8 @@
 import React, { useEffect, useState } from "react";
 
 import "./default.css";
-import "./main.css";
 import "./css/theme.css";
-
+import "./main.css";
 import useTodo from "./hooks/useTodo";
 import PomodoroTimer from "./components/Timer/PomodoroTimer";
 import TodoList from "./components/Todo/TodoList";
@@ -105,7 +104,6 @@ function App() {
                 </ul>
               </div>
             }
-
           </div>
         </header>
 

@@ -1,5 +1,5 @@
 @import "../../global.scss";
-
+@import "../../css/theme.css";
 
 .timerCont {
   display: block;
@@ -57,11 +57,13 @@
       .currentTime {
         font-size: 24px;
         font-weight: bold;
+        color: var(--text-color);
       }
     }
 
     div {
       padding: 5px;
+      color: var(--text-color);
     }
 
     p {
@@ -82,6 +84,7 @@
         input {
           font-size: 24px;
           text-align: center;
+          color: var(--text-color);
         }
       }
     }

@@ -1,8 +1,10 @@
 @import "../../global.scss";
+@import "../../css/theme.css";
 
 .todoTitle {
   font-size: 24px;
   font-weight: bold;
+  color: var(--text-color);
 }
 
 .todoCont {
@@ -16,6 +18,7 @@
     background: none;
     width: 100%;
     font-size: 18px;
+    color: var(--text-color);
   }
 
 }
@@ -29,7 +32,7 @@
   overflow-x: hidden;
 
   .todoNull {
-    color: #666;
+    color: var(--text-color);
     display: block;
     position: absolute;
     top: 50%;
@@ -50,12 +53,11 @@
         right: 0;
         z-index: 10;
         width: 100px;
-        background: #fff;
-        border: 1px solid #f3f3f3;
+        border: var(--menu-border);
         max-height: 200px; // 메뉴 최대 높이 제한 (원하는 대로 조절)
         overflow-y: auto; // 메뉴 내부 스크롤 허용
         box-sizing: border-box;
-
+        box-shadow: var(--box-shadow);
         li {
           width: 100%;
         }
@@ -63,23 +65,24 @@
         button {
           width: 100%;
           border-radius: 0;
-          background-color: #fff;
+          background-color: var(--bg-menu);
+          color: var(--text-color);
         }
 
         button:hover {
-          background-color: #ebebeb;
+          background-color: var(--btn-hover);
         }
       }
     }
   }
 
   .todoLi:hover {
-    background-color: #ebebeb;
+    background-color: var(--btn-hover);
   }
 
   .dragOver {
     border-top: 2px solid #ffd455;
-    background-color: #f0f8ff;
+    background-color: var(--btn-hover);
   }
 
   .screenReader {
@@ -117,6 +120,8 @@
       cursor: pointer;
       font-size: 18px;
       line-height: 20px;
+      color: var(--text-color);
+
     }
 
     input {
@@ -128,6 +133,7 @@
       background: none;
       border: none;
       border-bottom: 1px solid #ffd455;
+      color: var(--text-color);
     }
 
   }
@@ -170,7 +176,7 @@
   }
 
   .menu:hover {
-    background: #ebebeb;
+    background: var(--btn-hover);
   }
 
 }

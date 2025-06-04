@@ -10,7 +10,7 @@ const ThemeToggleButton = () => {
 
   return (
     <div onClick={toggleTheme} style={style}>
-      현재 테마: {theme === "light" ? "🌞 라이트" : "🌙 다크"}
+      현재 테마: {theme === "light" ? "라이트" : "다크"}
     </div>
   );
 };
