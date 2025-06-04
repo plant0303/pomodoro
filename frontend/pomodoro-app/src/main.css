@@ -57,30 +57,41 @@ body {
   height: 1px;
   margin-bottom: 5px;
   background-color: #000;
+  transition: 0.2s;
 }
 
 .header .more .moreBtn.close>span:last-child{
   margin-bottom: 0;
 }
 
-.header .more .moreBtn.close:hover{
+.header .more .moreBtn:hover{
   background-color: #eeeeee;
 }
 
 /* 메뉴 열림 아이콘 */
-.header .more .moreBtn.close>span {
+.header .more .moreBtn.open>span {
+  position: absolute;
   display: block;
   width: 20px;
   height: 1px;
-  margin-bottom: 5px;
   background-color: #000;
+  transition: 0.2s;
+}
+.header .more .moreBtn.open>span:nth-child(1){
+  transform: rotate(45deg);
+}
+.header .more .moreBtn.open>span:nth-child(2){
+  opacity: 0;
+}
+.header .more .moreBtn.open>span:nth-child(3){
+  transform: rotate(-45deg);
 }
 
 .header .more .moreBtn.close>span:last-child{
   margin-bottom: 0;
 }
 
-.header .more .moreBtn.close:hover{
+.header .more .moreBtn:hover{
   background-color: #eeeeee;
 }
 
@@ -89,6 +100,7 @@ body {
   z-index: 3;
   position: absolute;
   display: block;
+  margin-top: 5px;
   padding: 10px 5px;
   width: 200px;
   border: 1px solid #dcdcdc;
@@ -98,6 +110,7 @@ body {
   box-shadow: rgba(149, 157, 165, 0.1) 0px 8px 24px;
   transition: 0.2s;
 }
+
 
 .header .more .moreMenu ul li{
   cursor: pointer;

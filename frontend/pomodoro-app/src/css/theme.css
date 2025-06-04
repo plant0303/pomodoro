@@ -1,18 +1,44 @@
 /* 기본 공통 스타일 */
 .app {
   font-family: sans-serif;
-  transition:  0.3s, color 0.3s;
+  transition: 0.3s, color 0.3s;
   min-height: 100vh;
+  --menu-border: none;
 }
 
-/* 라이트 모드 */
-.app.light {
-  background-color: #ffffff;
-  color: #000000;
+:root {
+  --bg-menu: #fff;
+  --text-color: #000;
+  --btn-hover: #2e2e2e;
+    --box-shadow: rgba(0, 0, 0, 0.1);
+  --menu-border: 1px solid #f3f3f3; /* ✅ 기본값 추가 */
 }
 
 /* 다크 모드 */
 .app.dark {
-  background-color: #121212;
+  background-color: #121214;
   color: #ffffff;
+  --bg-menu: #1e1e1e;
+  --text-color: #ffffff;
+  --box-shadow: #ffffff2b;
+  --menu-border: none;
 }
+
+.header .more .moreBtn>span {
+  background-color: var(--bg-menu);
+}
+
+.header .more .moreMenu {
+  background-color: var(--bg-menu);
+  color: var(--text-color);
+  box-shadow: var(--box-shadow) 0px 0px 10px;
+  border: var(--menu-border);
+}
+
+/* .header .more .moreBtn:hover{
+  background-color: var(--btn-hover);
+}
+
+.header .more .moreMenu ul li:hover{
+  background-color: var(--btn-hover);
+} */

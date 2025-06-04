@@ -22,16 +22,16 @@ interface Todo {
 
 function App() {
   const {
-        todoList,
-        setTodoList,
-        showDeleteModal,
-        setShowDeleteModal,
-        setRunTutorial,
-        runTutorial,
-        handleDeleteRequest,
-        onToggleComplete,
-        handleConfirmDelete,
-        handleCancelDelete
+    todoList,
+    setTodoList,
+    showDeleteModal,
+    setShowDeleteModal,
+    setRunTutorial,
+    runTutorial,
+    handleDeleteRequest,
+    onToggleComplete,
+    handleConfirmDelete,
+    handleCancelDelete
   } = useTodo();
 
   // ESC 삭제 모달
@@ -58,66 +58,76 @@ function App() {
     console.log(runTutorial);
   }
 
+  const [isMenuOpen, setIsMenuOpen] = useState<boolean>(false);
+
+  const toggleMenu = () => {
+    setIsMenuOpen(prev => !prev);
+  }
+
   return (
     <ThemeProvider>
-    <div className="body">
-      <Joyride
-        steps={[
-          {
-            target: '.PomodoroTimer_startButton__3fwQn',
-            content: 'click'
-          }
-        ]}
-        run={runTutorial}
-        continuous
-        showSkipButton
-        disableScrolling={true}
-        styles={{
-          options: {
-            zIndex: 1000,
-          },
-        }}
-        callback={(data) => {
-          if (data.status === "finished" || data.status === "skipped") {
-            setRunTutorial(false);
-          }
-        }}
-      ></Joyride>
-      <header className="header">
-        <h1>TodoMoro</h1>
-        <div className="more">
-          <div className="moreBtn open">
-            <span></span>
-            <span></span>
-            <span></span>
-          </div>
-          <div className="moreMenu">
-            <ul>
-              <li><ThemeToggleButton /></li>
-            </ul>
-          </div>
-        </div>
-      </header>
+      <div className="body">
+        <Joyride
+          steps={[
+            {
+              target: '.PomodoroTimer_startButton__3fwQn',
+              content: 'click'
+            }
+          ]}
+          run={runTutorial}
+          continuous
+          showSkipButton
+          disableScrolling={true}
+          styles={{
+            options: {
+              zIndex: 1000,
+            },
+          }}
+          callback={(data) => {
+            if (data.status === "finished" || data.status === "skipped") {
+              setRunTutorial(false);
+            }
+          }}
+        ></Joyride>
+        <header className="header">
+          <h1>TodoMoro</h1>
+          <div className="more">
+            <div className={`moreBtn ${isMenuOpen ? 'open' : 'close'}`} onClick={toggleMenu}>
+              <span></span>
+              <span></span>
+              <span></span>
+            </div>
+            {isMenuOpen &&
+              <div className="moreMenu">
+                <ul>
+                  <li><ThemeToggleButton /></li>
+                  <li>설정</li>
+                </ul>
+              </div>
+            }
 
-      <div className="cont">
-        <div className="timer">
-          <PomodoroTimer></PomodoroTimer>
+          </div>
+        </header>
+
+        <div className="cont">
+          <div className="timer">
+            <PomodoroTimer></PomodoroTimer>
+          </div>
+          <div className="todo">
+            <TodoList
+              todoList={todoList}
+              setTodoList={setTodoList}
+              onDeleteClick={handleDeleteRequest}
+              onToggleComplete={onToggleComplete}
+            />
+          </div>
         </div>
-        <div className="todo">
-          <TodoList
-            todoList={todoList}
-            setTodoList={setTodoList}
-            onDeleteClick={handleDeleteRequest}
-            onToggleComplete={onToggleComplete}
-          />
+        <div className="tutorial" onClick={handleTutorial}>
+          <span className="tutorial_btn">?</span>
         </div>
+        {showDeleteModal == true &&
+          <DeleteModal onConfirm={handleConfirmDelete} onCancel={handleCancelDelete}></DeleteModal>}
       </div>
-      <div className="tutorial" onClick={handleTutorial}>
-        <span className="tutorial_btn">?</span>
-      </div>
-      {showDeleteModal == true &&
-        <DeleteModal onConfirm={handleConfirmDelete} onCancel={handleCancelDelete}></DeleteModal>}
-    </div>
     </ThemeProvider>
   );
 }
